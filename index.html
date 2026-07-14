@@ -4,123 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mars Avatar Project</title>
-
-<style>
-/* Современные стили для профессионального вида сайта Mars Avatar Project */
-
-:root {
-    --accent-color: #b22222;
-    --accent-hover: #8b0000;
-    --bg-color: #111111;
-    --text-color: #ffffff;
-}
-
-body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    line-height: 1.7;
-    text-align: center;
-}
-
-/* Шапка сайта */
-header {
-    background: linear-gradient(135deg, #8b0000 0%, #b22222 100%);
-    padding: 60px 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    text-align: center; /* <-- Добавлено, чтобы всё в шапке было по центру */
-}
-
-h1 {
-    margin: 0;
-    font-size: 2.8rem;
-    font-weight: 700;
-    letter-spacing: -1px;
-}
-
-/* Подзаголовок в шапке — теперь точно по центру */
-header p {
-    font-size: 1.3rem;
-    margin: 15px 0 0;
-    opacity: 0.95;
-    font-weight: 500;
-    text-align: center; /* <-- Исправление: подзаголовок по центру */
-}
-
-section {
-    padding: 60px 20px;
-    max-width: 850px;
-    margin: 0 auto;
-}
-
-h2 {
-    color: #ffb347;
-    font-size: 2rem;
-    margin-bottom: 25px;
-    font-weight: 600;
-}
-
-/* Текст в разделе About — читается лучше, когда выровнен по левому краю */
-p {
-    font-size: 1.1rem;
-    max-width: 700px;
-    margin: 0 auto 30px;
-    text-align: left;
-}
-
-.buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.button {
-    display: inline-block;
-    padding: 14px 28px;
-    background-color: var(--accent-color);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(178, 34, 34, 0.3);
-}
-
-.button:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-}
-
-footer {
-    background-color: #222222;
-    padding: 25px 20px;
-    margin-top: 40px;
-    font-size: 0.95rem;
-    color: #aaaaaa;
-}
-
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2.2rem;
-    }
-    
-    section {
-        padding: 40px 15px;
-    }
-    
-    .button {
-        padding: 12px 24px;
-        font-size: 0.95rem;
-    }
-}
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -130,9 +14,7 @@ footer {
 </header>
 
 <section>
-
 <h2>About</h2>
-
 <p>
 Mars Avatar Project is a concept for autonomous robotic avatars
 that can perform scientific and engineering tasks on Mars
@@ -143,13 +25,10 @@ under human supervision from Earth.
 <a class="button" href="https://github.com/Kvadratinho/mars-avatar-project">GitHub</a>
 <a class="button" href="https://doi.org/">Zenodo</a>
 </div>
-
 </section>
 
 <footer>
-
 <p>Author: Oleksandr Khalanhot</p>
-
 </footer>
 
 </body>
