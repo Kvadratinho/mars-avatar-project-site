@@ -8,7 +8,6 @@
 <style>
 /* Современные стили для профессионального вида сайта Mars Avatar Project */
 
-/* Цвета и переменные (удобно менять в будущем) */
 :root {
     --accent-color: #b22222;
     --accent-hover: #8b0000;
@@ -16,7 +15,6 @@
     --text-color: #ffffff;
 }
 
-/* Основные стили страницы */
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: var(--bg-color);
@@ -32,6 +30,7 @@ header {
     background: linear-gradient(135deg, #8b0000 0%, #b22222 100%);
     padding: 60px 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    text-align: center; /* <-- Добавлено, чтобы всё в шапке было по центру */
 }
 
 h1 {
@@ -41,14 +40,15 @@ h1 {
     letter-spacing: -1px;
 }
 
+/* Подзаголовок в шапке — теперь точно по центру */
 header p {
     font-size: 1.3rem;
     margin: 15px 0 0;
     opacity: 0.95;
     font-weight: 500;
+    text-align: center; /* <-- Исправление: подзаголовок по центру */
 }
 
-/* Основной раздел */
 section {
     padding: 60px 20px;
     max-width: 850px;
@@ -62,7 +62,7 @@ h2 {
     font-weight: 600;
 }
 
-/* Текст описания (лучше читается) */
+/* Текст в разделе About — читается лучше, когда выровнен по левому краю */
 p {
     font-size: 1.1rem;
     max-width: 700px;
@@ -70,7 +70,6 @@ p {
     text-align: left;
 }
 
-/* Контейнер для кнопок (современный и удобный на телефонах) */
 .buttons {
     display: flex;
     flex-wrap: wrap;
@@ -79,7 +78,6 @@ p {
     margin-top: 20px;
 }
 
-/* Стиль кнопок */
 .button {
     display: inline-block;
     padding: 14px 28px;
@@ -93,14 +91,12 @@ p {
     box-shadow: 0 2px 8px rgba(178, 34, 34, 0.3);
 }
 
-/* Эффект при наведении мыши */
 .button:hover {
     background-color: var(--accent-hover);
     transform: translateY(-3px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Подвал */
 footer {
     background-color: #222222;
     padding: 25px 20px;
@@ -109,7 +105,6 @@ footer {
     color: #aaaaaa;
 }
 
-/* Адаптивность для мобильных телефонов */
 @media (max-width: 600px) {
     h1 {
         font-size: 2.2rem;
