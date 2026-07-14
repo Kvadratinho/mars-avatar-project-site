@@ -578,5 +578,29 @@ footer {
   color: var(--mars-bright);
   background-color: rgba(193, 68, 14, 0.12);
 }
+/* ============ CONTACT EMAIL ============ */
+.contact-email {
+  margin-top: 28px;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+
+.contact-label {
+  display: inline-block;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  margin-right: 12px;
+}
+
+.contact-email a {
+  color: var(--mars-bright);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 107, 53, 0.4);
+}
+
+.contact-email a:hover {
+  border-bottom-color: var(--mars-bright);
+}
 
 
