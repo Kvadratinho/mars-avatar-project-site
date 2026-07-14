@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Тёмный фон -->
+  <rect width="64" height="64" rx="14" fill="#0b1220"/>
+  <!-- Марс -->
+  <circle cx="32" cy="32" r="17" fill="#c1440e"/>
+  <circle cx="26" cy="27" r="4" fill="#ff6b35" opacity="0.5"/>
+  <circle cx="38" cy="38" r="5" fill="#8b2f0a" opacity="0.6"/>
+  <!-- Орбита сигнала -->
+  <ellipse cx="32" cy="32" rx="27" ry="10" fill="none" stroke="#3a6ea5" stroke-width="2.5" transform="rotate(-20 32 32)"/>
+  <!-- Точка-спутник на орбите -->
+  <circle cx="55" cy="22" r="3.5" fill="#ff6b35"/>
+</svg>
