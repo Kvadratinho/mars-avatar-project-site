@@ -550,4 +550,33 @@ footer {
   color: var(--text-dim);
   border-top: 1px solid var(--line);
 }
+/* ============ SCROLL REVEAL ============ */
+/* Раздел начинает невидимым и чуть смещённым вниз... */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* ...и плавно появляется, когда попадает в поле зрения */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Если у пользователя включён режим "меньше анимации" — показываем сразу */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============ ACTIVE NAV LINK ============ */
+/* Пункт меню текущего раздела подсвечивается оранжевым */
+#nav-links a.active {
+  color: var(--mars-bright);
+  background-color: rgba(193, 68, 14, 0.12);
+}
+
 
