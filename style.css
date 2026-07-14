@@ -522,3 +522,32 @@ footer {
   .section { padding: 64px 20px; }
   .stat-row { gap: 28px; }
 }
+/* ============ GALLERY IMAGES ============ */
+.gallery-item {
+  margin: 0;
+  background-color: var(--bg-panel-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-item:hover {
+  border-color: var(--blue-glow);
+  transform: translateY(-4px);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery-item figcaption {
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--line);
+}
+
