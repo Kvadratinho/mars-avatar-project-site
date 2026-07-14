@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mars Avatar Project — Control Without Presence</title>
+<meta name="description" content="Mars Avatar Project: a research concept for autonomous robotic avatars performing scientific and engineering tasks on Mars under human supervision from Earth.">
+
+<!-- Google Fonts: Space Grotesk (headings, technical feel) + Inter (body, readable) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<nav id="site-nav">
+  <a href="#home" class="nav-logo">MARS AVATAR PROJECT</a>
+  <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <div id="nav-links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#mission-ai">Mission AI</a>
+    <a href="#fleet">Fleet</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#whitepaper">White Paper</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ============ HOME / HERO ============ -->
+<header id="home">
+  <div class="signal-badge">
+    <span class="dot"></span>
+    EARTH ⇄ MARS SIGNAL DELAY&nbsp;·&nbsp;4–24&nbsp;MIN ONE-WAY
+  </div>
+  <h1>Mars Avatar Project</h1>
+  <p class="tagline">Control Without Presence</p>
+  <p class="hero-sub">
+    A research concept for autonomous robotic avatars that carry out
+    scientific and engineering work on the Martian surface — supervised,
+    not remote-controlled, by human operators on Earth.
+  </p>
+  <div class="buttons">
+    <a class="button button-primary" href="#whitepaper">Read the White Paper</a>
+    <a class="button" href="https://github.com/Kvadratinho/mars-avatar-project" target="_blank" rel="noopener">GitHub</a>
+    <a class="button" href="https://doi.org/" target="_blank" rel="noopener">Zenodo DOI</a>
+  </div>
+  <a href="#about" class="scroll-cue" aria-label="Scroll to About">↓</a>
+</header>
+
+<main>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="section">
+  <p class="eyebrow">Overview</p>
+  <h2>About the Project</h2>
+  <div class="section-grid">
+    <p>
+      Every second of latency between Earth and Mars makes direct teleoperation
+      impossible. A joystick command sent from a control room on Earth can take
+      up to twenty-four minutes to reach the surface — and just as long for the
+      response to come back. Real-time remote control simply does not work at
+      interplanetary distance.
+    </p>
+    <p>
+      The Mars Avatar Project explores a different model. Instead of a human
+      pilot at the controls, a robotic avatar on Mars receives high-level
+      intent — a goal, a constraint, a priority — and works out the low-level
+      execution itself, in the moment, on-site. The human role shifts from
+      <em>operator</em> to <em>supervisor</em>: reviewing, approving, and
+      redirecting, rather than steering every motion by hand.
+    </p>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><span class="stat-num">4–24</span><span class="stat-label">min one-way signal delay</span></div>
+    <div class="stat"><span class="stat-num">0</span><span class="stat-label">real-time joystick control</span></div>
+    <div class="stat"><span class="stat-num">1</span><span class="stat-label">supervising human, many avatar tasks</span></div>
+  </div>
+</section>
+
+<!-- ============ ARCHITECTURE ============ -->
+<section id="architecture" class="section section-alt">
+  <p class="eyebrow">System Design</p>
+  <h2>Architecture</h2>
+  <p class="section-intro">
+    The system is organized as three cooperating layers, each built to tolerate
+    the communication gap between the two planets.
+  </p>
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-index">01</span>
+      <h3>Earth Command Layer</h3>
+      <p>Mission specialists define objectives, constraints, and safety envelopes. No moment-to-moment piloting — decisions are reviewed in batches as the signal window allows.</p>
+    </div>
+    <div class="card">
+      <span class="card-index">02</span>
+      <h3>Relay &amp; Scheduling Layer</h3>
+      <p>Commands and telemetry are queued, prioritized, and transmitted across the Deep Space Network link, accounting for orbital geometry and bandwidth windows.</p>
+    </div>
+    <div class="card">
+      <span class="card-index">03</span>
+      <h3>Avatar Autonomy Layer</h3>
+      <p>Onboard the rover or robotic platform, local AI translates intent into action — navigation, manipulation, and hazard response — without waiting for Earth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MISSION AI ============ -->
+<section id="mission-ai" class="section">
+  <p class="eyebrow">Onboard Intelligence</p>
+  <h2>Mission AI</h2>
+  <div class="section-grid">
+    <p>
+      Mission AI is the decision-making system that lives on the avatar itself.
+      It does not wait for permission to react to what it sees — a slope that's
+      too steep, a rock that's too unstable, a sensor reading that's out of
+      range. It handles these locally, in seconds, and reports back on the next
+      communication pass.
+    </p>
+    <p>
+      What it does <em>not</em> do is decide mission priorities on its own.
+      Strategic choices — which site to investigate, which sample to collect —
+      stay with the human team on Earth. The avatar is trusted to execute
+      safely, not to set the mission's goals.
+    </p>
+  </div>
+  <ul class="check-list">
+    <li>Local hazard detection and avoidance</li>
+    <li>Path planning between waypoints set by Earth</li>
+    <li>Manipulation task execution (drilling, sampling, deployment)</li>
+    <li>Continuous self-diagnostics and fault reporting</li>
+  </ul>
+</section>
+
+<!-- ============ ROBOTIC AVATAR FLEET ============ -->
+<section id="fleet" class="section section-alt">
+  <p class="eyebrow">Hardware Concept</p>
+  <h2>Robotic Avatar Fleet</h2>
+  <p class="section-intro">
+    Rather than one general-purpose rover, the concept proposes a small fleet
+    of specialized avatars that coordinate on shared objectives.
+  </p>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Survey Unit</h3>
+      <p>Long-range mobility platform for terrain mapping and site reconnaissance ahead of other units.</p>
+    </div>
+    <div class="card">
+      <h3>Manipulator Unit</h3>
+      <p>Fixed-base or short-range arm-equipped avatar for sample collection, drilling, and equipment handling.</p>
+    </div>
+    <div class="card">
+      <h3>Relay Unit</h3>
+      <p>Stationary or elevated platform extending local communication range between avatars and orbital relays.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section id="roadmap" class="section">
+  <p class="eyebrow">Development Plan</p>
+  <h2>Roadmap</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <span class="timeline-marker">Phase 1</span>
+      <div class="timeline-content">
+        <h3>Concept &amp; Publication</h3>
+        <p>Formalize the architecture, publish the white paper, establish the open-source repository.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-marker">Phase 2</span>
+      <div class="timeline-content">
+        <h3>Simulation</h3>
+        <p>Build a software simulation of the command → relay → autonomy pipeline under realistic latency conditions.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-marker">Phase 3</span>
+      <div class="timeline-content">
+        <h3>Prototype Testbed</h3>
+        <p>Develop a small-scale physical or robotic testbed to validate autonomy behaviors in analog terrain.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <span class="timeline-marker">Phase 4</span>
+      <div class="timeline-content">
+        <h3>Partnerships</h3>
+        <p>Engage universities, research institutes, and aerospace organizations for collaboration and review.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHITE PAPER ============ -->
+<section id="whitepaper" class="section section-alt">
+  <p class="eyebrow">Documentation</p>
+  <h2>White Paper</h2>
+  <p class="section-intro">
+    The full technical concept — motivation, architecture, and open research
+    questions — is available as a white paper.
+  </p>
+  <div class="buttons">
+    <a class="button button-primary" href="#" target="_blank" rel="noopener">Download White Paper (PDF)</a>
+  </div>
+  <p class="note">White paper link will be added once published on Zenodo.</p>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery" class="section">
+  <p class="eyebrow">Visuals</p>
+  <h2>Gallery</h2>
+  <p class="section-intro">Concept diagrams and mission visuals will be added here.</p>
+  <div class="gallery-grid">
+    <div class="gallery-placeholder">Diagram 01</div>
+    <div class="gallery-placeholder">Diagram 02</div>
+    <div class="gallery-placeholder">Diagram 03</div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="section section-alt">
+  <p class="eyebrow">Get in Touch</p>
+  <h2>Contact</h2>
+  <p class="section-intro">
+    Open to collaboration with researchers, engineers, and institutions
+    interested in autonomous planetary systems.
+  </p>
+  <div class="buttons">
+    <a class="button button-primary" href="mailto:youremail@example.com">Email</a>
+    <a class="button" href="https://github.com/Kvadratinho/mars-avatar-project" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <p>Mars Avatar Project — Control Without Presence</p>
+  <p class="footer-author">Author: Oleksandr Khalanhot</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
