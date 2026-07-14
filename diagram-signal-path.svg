@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="Menlo, Consolas, monospace">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#0b1220"/>
+
+  <!-- Stars -->
+  <g fill="#eef1f5" opacity="0.5">
+    <circle cx="90" cy="70" r="1.2"/><circle cx="210" cy="140" r="0.8"/><circle cx="330" cy="60" r="1"/>
+    <circle cx="470" cy="110" r="0.8"/><circle cx="590" cy="50" r="1.2"/><circle cx="710" cy="130" r="0.9"/>
+    <circle cx="150" cy="480" r="1"/><circle cx="650" cy="500" r="1"/><circle cx="400" cy="530" r="0.8"/>
+    <circle cx="60" cy="300" r="0.9"/><circle cx="740" cy="330" r="1.1"/>
+  </g>
+
+  <!-- Title -->
+  <text x="400" y="48" text-anchor="middle" fill="#ff6b35" font-size="13" letter-spacing="3">COMMUNICATION ARCHITECTURE</text>
+  <text x="400" y="76" text-anchor="middle" fill="#eef1f5" font-size="22" font-weight="bold" letter-spacing="1">Earth — Mars Signal Path</text>
+
+  <!-- Earth -->
+  <g>
+    <circle cx="140" cy="330" r="62" fill="#13294b" stroke="#3a6ea5" stroke-width="2"/>
+    <path d="M100 310 q20 -14 40 -4 q22 10 38 -2" stroke="#3a6ea5" stroke-width="2" fill="none" opacity="0.7"/>
+    <path d="M96 348 q26 10 50 2 q24 -8 44 4" stroke="#3a6ea5" stroke-width="2" fill="none" opacity="0.7"/>
+    <text x="140" y="425" text-anchor="middle" fill="#eef1f5" font-size="15" font-weight="bold">EARTH</text>
+    <text x="140" y="446" text-anchor="middle" fill="#9aa7b8" font-size="11">Mission Control</text>
+    <text x="140" y="463" text-anchor="middle" fill="#9aa7b8" font-size="11">Supervision · Goals</text>
+  </g>
+
+  <!-- Relay satellite -->
+  <g>
+    <rect x="372" y="208" width="56" height="34" rx="4" fill="#0e1526" stroke="#3a6ea5" stroke-width="2"/>
+    <rect x="332" y="216" width="34" height="18" rx="2" fill="#13294b" stroke="#3a6ea5" stroke-width="1.5"/>
+    <rect x="434" y="216" width="34" height="18" rx="2" fill="#13294b" stroke="#3a6ea5" stroke-width="1.5"/>
+    <text x="400" y="182" text-anchor="middle" fill="#eef1f5" font-size="13" font-weight="bold">ORBITAL RELAY</text>
+    <text x="400" y="270" text-anchor="middle" fill="#9aa7b8" font-size="11">Store · Queue · Forward</text>
+  </g>
+
+  <!-- Mars -->
+  <g>
+    <circle cx="660" cy="330" r="52" fill="#3a1508" stroke="#c1440e" stroke-width="2"/>
+    <circle cx="642" cy="316" r="8" fill="#c1440e" opacity="0.35"/>
+    <circle cx="676" cy="344" r="12" fill="#c1440e" opacity="0.25"/>
+    <text x="660" y="415" text-anchor="middle" fill="#eef1f5" font-size="15" font-weight="bold">MARS</text>
+    <text x="660" y="436" text-anchor="middle" fill="#9aa7b8" font-size="11">Avatar Fleet</text>
+    <text x="660" y="453" text-anchor="middle" fill="#9aa7b8" font-size="11">Local Autonomy</text>
+  </g>
+
+  <!-- Signal path Earth -> Relay -->
+  <path d="M196 296 Q290 230 366 226" stroke="#ff6b35" stroke-width="2" fill="none" stroke-dasharray="7 6"/>
+  <polygon points="366,226 354,222 356,233" fill="#ff6b35"/>
+
+  <!-- Signal path Relay -> Mars -->
+  <path d="M434 226 Q540 232 616 292" stroke="#ff6b35" stroke-width="2" fill="none" stroke-dasharray="7 6"/>
+  <polygon points="616,292 604,290 609,281" fill="#ff6b35"/>
+
+  <!-- Return path Mars -> Earth (telemetry) -->
+  <path d="M608 366 Q400 470 192 366" stroke="#3a6ea5" stroke-width="2" fill="none" stroke-dasharray="4 6"/>
+  <polygon points="192,366 204,371 202,360" fill="#3a6ea5"/>
+  <text x="400" y="452" text-anchor="middle" fill="#3a6ea5" font-size="11">TELEMETRY · REPORTS · REQUESTS</text>
+
+  <!-- Delay badge -->
+  <rect x="290" y="108" width="220" height="34" rx="17" fill="none" stroke="#ff6b35" stroke-width="1.5"/>
+  <circle cx="312" cy="125" r="4" fill="#ff6b35"/>
+  <text x="410" y="130" text-anchor="middle" fill="#eef1f5" font-size="12">ONE-WAY DELAY: 4–24 MIN</text>
+
+  <!-- Footer -->
+  <text x="400" y="565" text-anchor="middle" fill="#5f6b7d" font-size="10" letter-spacing="2">MARS AVATAR PROJECT · FIG. 1</text>
+</svg>
