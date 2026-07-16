@@ -126,21 +126,66 @@
 <section id="about" class="section">
   <p class="eyebrow">Overview</p>
   <h2>About the Project</h2>
+
+  <h3 style="margin:2.2rem 0 0.8rem; font-size:1.25rem;">The Problem</h3>
   <div class="section-grid">
     <p>
-      Every second of latency between Earth and Mars makes direct teleoperation
-      impossible. A joystick command sent from a control room on Earth can take
-      up to twenty-four minutes to reach the surface — and just as long for the
-      response to come back. Real-time remote control simply does not work at
-      interplanetary distance.
+      Current approaches solve fragments of the problem, not the problem itself.
+      Direct teleoperation — the model behind every crewed robotics experiment
+      to date — has only been validated at sub-second delays: astronauts on the
+      ISS controlling rovers on Earth below them. It physically cannot scale to
+      the 4–24 minute light-time of an interplanetary link.
     </p>
     <p>
-      The Mars Avatar Project explores a different model. Instead of a human
-      pilot at the controls, a robotic avatar on Mars receives high-level
-      intent — a goal, a constraint, a priority — and works out the low-level
-      execution itself, in the moment, on-site. The human role shifts from
-      <em>operator</em> to <em>supervisor</em>: reviewing, approving, and
-      redirecting, rather than steering every motion by hand.
+      Mars rovers, meanwhile, have proven that onboard autonomy works —
+      Perseverance drives most of its route without human review — but each
+      rover is a single general-purpose machine executing pre-planned sorties,
+      with science decisions bottlenecked through daily command cycles.
+      Supervisory control theory has described the solution for three decades,
+      yet no architecture integrates all three pieces: full interplanetary
+      latency, human supervision of intent rather than motion, and multiple
+      specialized robots coordinating locally.
+    </p>
+  </div>
+
+  <h3 style="margin:2.2rem 0 0.8rem; font-size:1.25rem;">The Solution</h3>
+  <div class="section-grid">
+    <p>
+      The Mars Avatar Project addresses the gap between human judgment and
+      Martian reality. The problem is not moving a robot — it is keeping humans
+      meaningfully in charge of work they cannot see in real time and cannot
+      steer by hand.
+    </p>
+    <p>
+      The project proposes an architecture where Earth supplies
+      <em>intent</em> — goals, constraints, priorities — and a fleet of
+      specialized avatars supplies <em>execution</em>: navigating, manipulating,
+      and reacting to hazards locally, in seconds, then reporting back across
+      the delay. Humans remain the mission's decision-makers without becoming
+      its bottleneck.
+    </p>
+  </div>
+
+  <h3 style="margin:2.2rem 0 0.8rem; font-size:1.25rem;">Why It Matters</h3>
+  <div class="section-grid">
+    <p>
+      Every future beyond low Earth orbit depends on solving this problem.
+      Before humans land on Mars, someone has to build landing pads, deploy
+      power systems, and stockpile resources — work that must begin years
+      before the first crew arrives, with no one on-site to supervise it.
+      After humans land, every hour of astronaut time will be too scarce and
+      too dangerous to spend on routine tasks that a supervised machine could
+      do. And between those two moments lies the science itself: samples,
+      surveys, and infrastructure maintained continuously, not only when a
+      rover's daily command cycle allows.
+    </p>
+    <p>
+      Control without presence is not a convenience — it is the missing layer
+      between today's rovers and tomorrow's settlements. Whoever solves
+      supervised autonomy at interplanetary distance unlocks not just Mars,
+      but every destination where humans cannot yet stand: the lunar far side,
+      asteroids, the outer moons. <em>The architecture matters more than the
+      destination.</em>
     </p>
   </div>
 </section>
