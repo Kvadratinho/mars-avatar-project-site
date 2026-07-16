@@ -74,6 +74,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
+<style>
+  /* Hero background: Mars panorama with dark overlay for text readability */
+  header#home{
+    background:
+      linear-gradient(to bottom,
+        rgba(10,7,6,0.55) 0%,
+        rgba(10,7,6,0.45) 45%,
+        rgba(10,7,6,0.85) 100%),
+      url('hero-bg.jpg') 65% bottom / cover no-repeat;
+  }
+  @media (max-width: 700px){
+    header#home{
+      background:
+        linear-gradient(to bottom,
+          rgba(10,7,6,0.60) 0%,
+          rgba(10,7,6,0.55) 45%,
+          rgba(10,7,6,0.88) 100%),
+        url('hero-bg.jpg') 60% bottom / cover no-repeat;
+    }
+  }
+</style>
 </head>
 
 <body>
