@@ -17,7 +17,7 @@
 <meta property="og:title" content="Mars Avatar Project — Control Without Presence">
 <meta property="og:description" content="A research concept for autonomous robotic avatars performing scientific and engineering work on Mars under human supervision from Earth.">
 <meta property="og:url" content="https://mars-avatar.com/">
-<meta property="og:image" content="https://mars-avatar.com/og-image.png">
+<meta property="og:image" content="https://mars-avatar.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
@@ -26,7 +26,7 @@
 <meta name="twitter:site" content="@Mars_avatar">
 <meta name="twitter:title" content="Mars Avatar Project — Control Without Presence">
 <meta name="twitter:description" content="A research concept for autonomous robotic avatars performing scientific and engineering work on Mars under human supervision from Earth.">
-<meta name="twitter:image" content="https://mars-avatar.com/og-image.png">
+<meta name="twitter:image" content="https://mars-avatar.com/og-image.jpg">
 
 <!-- Иконка сайта -->
 <link rel="icon" href="favicon.ico" sizes="48x48">
@@ -55,6 +55,14 @@
         "https://github.com/Kvadratinho",
         "https://doi.org/10.5281/zenodo.21273859"
       ]
+    },
+    {
+      "@type": "ResearchProject",
+      "name": "Mars Avatar Project",
+      "alternateName": "Control Without Presence",
+      "url": "https://mars-avatar.com/",
+      "founder": { "@type": "Person", "name": "Oleksandr Khalanhot" },
+      "description": "An open research concept for supervising fleets of autonomous robotic avatars on Mars across full interplanetary signal delay."
     },
     {
       "@type": "ScholarlyArticle",
@@ -94,6 +102,29 @@
         url('hero-bg.jpg') 60% bottom / cover no-repeat;
     }
   }
+  /* Floating back-to-top button */
+  #to-top{
+    position:fixed; right:1.1rem; bottom:1.1rem; z-index:90;
+    width:46px; height:46px; border-radius:50%;
+    background:rgba(26,18,16,0.92); border:1px solid #33221d;
+    color:#e8ddd6; font-size:1.25rem; text-decoration:none;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none; transition:opacity .3s;
+  }
+  #to-top.show{ opacity:1; pointer-events:auto; }
+  /* Contact form */
+  .contact-form{
+    max-width:480px; margin:2rem auto 0; display:grid; gap:0.8rem; text-align:left;
+  }
+  .contact-form input, .contact-form textarea{
+    width:100%; box-sizing:border-box; padding:0.85rem 1rem;
+    background:#1a1210; border:1px solid #33221d; border-radius:8px;
+    color:#e8ddd6; font-family:inherit; font-size:1rem;
+  }
+  .contact-form input:focus, .contact-form textarea:focus{
+    outline:none; border-color:#c65a33;
+  }
+  .contact-form button{ cursor:pointer; font-family:inherit; }
 </style>
 </head>
 
@@ -430,8 +461,14 @@
     Open to collaboration with researchers, engineers, and institutions
     interested in autonomous planetary systems.
   </p>
-  <div class="buttons">
-    <a class="button button-primary" href="mailto:kvadratinho@gmail.com">Email</a>
+  <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <input type="text" name="name" placeholder="Your name" required>
+    <input type="email" name="email" placeholder="Your email" required>
+    <textarea name="message" rows="4" placeholder="Your message" required></textarea>
+    <button type="submit" class="button button-primary">Send Message</button>
+  </form>
+  <div class="buttons" style="margin-top:1.5rem;">
+    <a class="button" href="mailto:kvadratinho@gmail.com">Email</a>
     <a class="button" href="https://github.com/Kvadratinho/mars-avatar-project" target="_blank" rel="noopener">GitHub</a>
     <a class="button" href="https://x.com/Mars_avatar" target="_blank" rel="noopener">Follow on X</a>
   </div>
@@ -455,6 +492,16 @@
   </p>
 </footer>
 
+<a href="#home" id="to-top" aria-label="Back to top">&#8593;</a>
+
 <script src="script.js"></script>
+<script>
+  (function(){
+    var btn = document.getElementById('to-top');
+    window.addEventListener('scroll', function(){
+      btn.classList.toggle('show', window.scrollY > 600);
+    }, {passive:true});
+  })();
+</script>
 </body>
 </html>
