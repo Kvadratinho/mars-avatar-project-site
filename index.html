@@ -131,20 +131,21 @@
   <div class="section-grid">
     <p>
       Current approaches solve fragments of the problem, not the problem itself.
-      Direct teleoperation — the model behind every crewed robotics experiment
-      to date — has only been validated at sub-second delays: astronauts on the
-      ISS controlling rovers on Earth below them. It physically cannot scale to
-      the 4–24 minute light-time of an interplanetary link.
+      Remote control by hand — the model behind every crewed robotics
+      experiment to date — has only been proven with delays of less than a
+      second: astronauts on the ISS driving rovers on Earth right below them.
+      Between Earth and Mars, a signal takes 4 to 24 minutes each way. No
+      reaction time, however fast, survives that gap.
     </p>
     <p>
-      Mars rovers, meanwhile, have proven that onboard autonomy works —
-      Perseverance drives most of its route without human review — but each
-      rover is a single general-purpose machine executing pre-planned sorties,
-      with science decisions bottlenecked through daily command cycles.
-      Supervisory control theory has described the solution for three decades,
-      yet no architecture integrates all three pieces: full interplanetary
-      latency, human supervision of intent rather than motion, and multiple
-      specialized robots coordinating locally.
+      Mars rovers, meanwhile, have proven that machines can drive themselves —
+      Perseverance covers most of its route with no human watching — but each
+      rover is a single do-everything machine following routes planned days in
+      advance, and every science decision still waits for the next day's
+      instructions from Earth. Researchers described the answer decades ago:
+      humans should supervise, not steer. Yet no one has built the full
+      picture — real Mars-distance delay, humans setting goals instead of
+      driving, and several specialized robots working together on-site.
     </p>
   </div>
 
