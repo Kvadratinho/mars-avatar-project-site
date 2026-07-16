@@ -191,24 +191,24 @@
   <p class="eyebrow">System Design</p>
   <h2>Architecture</h2>
   <p class="section-intro">
-    The system is organized as three cooperating layers, each built to tolerate
-    the communication gap between the two planets.
+    The system is built as three layers working together — each designed
+    around one hard fact: the two planets cannot talk in real time.
   </p>
   <div class="card-grid">
     <div class="card">
       <span class="card-index">01</span>
       <h3>Earth Command Layer</h3>
-      <p>Mission specialists define objectives, constraints, and safety envelopes. No moment-to-moment piloting — decisions are reviewed in batches as the signal window allows.</p>
+      <p>The mission team on Earth defines what needs to be done: objectives, constraints, and safety limits. There is no moment-to-moment piloting — the team reviews results and approves the next set of tasks as the communication schedule allows.</p>
     </div>
     <div class="card">
       <span class="card-index">02</span>
       <h3>Relay &amp; Scheduling Layer</h3>
-      <p>Commands and telemetry are queued, prioritized, and transmitted across the Deep Space Network link, accounting for orbital geometry and bandwidth windows.</p>
+      <p>The link between the planets. Commands heading to Mars and telemetry coming back are queued, prioritized, and transmitted whenever a communication window opens between Earth and Mars.</p>
     </div>
     <div class="card">
       <span class="card-index">03</span>
       <h3>Avatar Autonomy Layer</h3>
-      <p>Onboard the rover or robotic platform, local AI translates intent into action — navigation, manipulation, and hazard response — without waiting for Earth.</p>
+      <p>Onboard the avatars on Mars, local AI turns each task into action — planning the route, operating the tools, responding to hazards — in seconds, without waiting for instructions from Earth.</p>
     </div>
   </div>
 </section>
