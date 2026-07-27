@@ -11,6 +11,7 @@
   --bg-panel: #0b1220;         /* dark blue panel background */
   --bg-panel-alt: #0e1526;     /* slightly lighter panel for alternating sections */
   --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
 
   --blue-deep: #13294b;        /* structural dark blue */
   --blue-glow: #3a6ea5;        /* lighter blue for glows/accents */
@@ -18,10 +19,11 @@
   --mars: #c1440e;             /* primary Mars orange */
   --mars-bright: #ff6b35;      /* brighter orange for hover/highlight */
   --red-soft: #b3392a;         /* soft red accent */
+  --green-ok: #63a882;         /* completed status */
 
   --text: #eef1f5;
   --text-dim: #9aa7b8;
-  --text-faint: #5f6b7d;
+  --text-faint: #7b8798;       /* WCAG AA: 5.5:1 on --bg-deep (was #5f6b7d = 3.7:1) */
 
   /* Type */
   --font-display: "Space Grotesk", system-ui, sans-serif;
@@ -31,11 +33,16 @@
   /* Layout */
   --max-width: 1080px;
   --radius: 10px;
+  --nav-height: 66px;
 }
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Keep anchored headings clear of the sticky navigation bar */
+  scroll-padding-top: calc(var(--nav-height) + 16px);
+}
 
 body {
   margin: 0;
@@ -44,6 +51,7 @@ body {
   font-family: var(--font-body);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -55,6 +63,13 @@ h1, h2, h3 {
 a { color: inherit; }
 
 img { max-width: 100%; display: block; }
+
+/* Visible keyboard focus everywhere, not only on nav links and buttons */
+:focus-visible {
+  outline: 2px solid var(--mars-bright);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
 /* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
@@ -70,7 +85,9 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   padding: 16px 24px;
+  min-height: var(--nav-height);
   background: rgba(5, 7, 13, 0.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
@@ -100,6 +117,7 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
   padding: 8px 12px;
   border-radius: 6px;
+  white-space: nowrap;
   transition: color 0.2s ease, background-color 0.2s ease;
 }
 
@@ -129,7 +147,13 @@ img { max-width: 100%; display: block; }
   height: 2px;
   background-color: var(--text);
   border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
+
+/* Hamburger turns into a cross while the menu is open */
+#nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+#nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ============ HERO / HOME ============ */
 header#home {
@@ -146,6 +170,30 @@ header#home {
     radial-gradient(ellipse 60% 50% at 50% 0%, rgba(58, 110, 165, 0.25), transparent 60%),
     radial-gradient(ellipse 70% 60% at 50% 100%, rgba(193, 68, 14, 0.12), transparent 70%),
     var(--bg-deep);
+}
+
+/* Optional Mars panorama behind the hero. The gradients above stay as the
+   fallback if hero-bg.jpg is missing. */
+header#home.has-photo {
+  background:
+    linear-gradient(to bottom,
+      rgba(5, 7, 13, 0.78) 0%,
+      rgba(5, 7, 13, 0.68) 45%,
+      rgba(5, 7, 13, 0.94) 100%),
+    url("hero-bg.jpg") 65% bottom / cover no-repeat,
+    var(--bg-deep);
+}
+
+@media (max-width: 700px) {
+  header#home.has-photo {
+    background:
+      linear-gradient(to bottom,
+        rgba(5, 7, 13, 0.82) 0%,
+        rgba(5, 7, 13, 0.74) 45%,
+        rgba(5, 7, 13, 0.95) 100%),
+      url("hero-bg.jpg") 60% bottom / cover no-repeat,
+      var(--bg-deep);
+  }
 }
 
 .signal-badge {
@@ -193,6 +241,33 @@ header#home h1 {
   margin: 24px auto 0;
 }
 
+/* Three-line value proposition under the hero subtitle */
+.value-prop {
+  list-style: none;
+  padding: 0;
+  margin: 32px auto 0;
+  max-width: 620px;
+  text-align: left;
+  border-top: 1px solid var(--line);
+}
+
+.value-prop li {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 0 14px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 1rem;
+}
+
+.value-prop .vp-n {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--mars-bright);
+}
+
 .scroll-cue {
   position: absolute;
   bottom: 28px;
@@ -220,7 +295,7 @@ header#home h1 {
   display: inline-block;
   padding: 13px 26px;
   border-radius: 8px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   text-decoration: none;
   font-family: var(--font-body);
   font-weight: 600;
@@ -237,15 +312,20 @@ header#home h1 {
   transform: translateY(-2px);
 }
 
+/* Pure white on --mars gives 5.1:1; the previous --text gave only 4.5:1 */
 .button-primary {
   background-color: var(--mars);
   border-color: var(--mars);
+  color: #ffffff;
 }
 
+/* Dark label on the bright hover orange: 7.1:1.
+   The old light label on #ff6b35 was 2.5:1 and failed AA. */
 .button-primary:hover,
 .button-primary:focus-visible {
   background-color: var(--mars-bright);
   border-color: var(--mars-bright);
+  color: var(--bg-deep);
 }
 
 /* ============ SECTIONS ============ */
@@ -312,32 +392,29 @@ header#home h1 {
   margin-top: 16px;
 }
 
-/* ============ STATS ============ */
-.stat-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  margin-top: 56px;
-  padding-top: 40px;
-  border-top: 1px solid var(--line);
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-num {
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 700;
+/* Inline links inside body copy — previously they inherited the dimmed
+   text colour and were hard to tell apart from ordinary text. */
+.section-intro a,
+.check-list a,
+.timeline-content a,
+.card p a,
+.wp-v a,
+.footer-cols a,
+.status-board a {
   color: var(--mars-bright);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 107, 53, 0.35);
+  transition: border-color 0.2s ease;
 }
 
-.stat-label {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  margin-top: 4px;
+.section-intro a:hover,
+.check-list a:hover,
+.timeline-content a:hover,
+.card p a:hover,
+.wp-v a:hover,
+.footer-cols a:hover,
+.status-board a:hover {
+  border-bottom-color: var(--mars-bright);
 }
 
 /* ============ CARDS ============ */
@@ -372,6 +449,15 @@ header#home h1 {
   margin-bottom: 16px;
 }
 
+/* Line icon at the top of a card */
+.card-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--mars-bright);
+  margin-bottom: 16px;
+  display: block;
+}
+
 .card h3 {
   font-size: 1.15rem;
   margin-bottom: 10px;
@@ -390,7 +476,7 @@ header#home h1 {
   padding: 0;
   display: grid;
   gap: 12px;
-  max-width: 560px;
+  max-width: 680px;
 }
 
 .check-list li {
@@ -410,7 +496,7 @@ header#home h1 {
   border-radius: 2px;
 }
 
-/* ============ TIMELINE (Roadmap) ============ */
+/* ============ TIMELINE (Architecture / Roadmap) ============ */
 .timeline {
   position: relative;
   margin-top: 24px;
@@ -425,16 +511,23 @@ header#home h1 {
 
 .timeline-item:last-child { padding-bottom: 0; }
 
+/* The 16px dot (12px + 2px border each side) is centred on the 1px rule:
+   -40px = -(32px padding + 1px border + 8px half-dot + 0.5px). The previous
+   value of -37px sat 3.5px to the right of the line. */
 .timeline-item::before {
   content: "";
   position: absolute;
-  left: -37px;
+  left: -40px;
   top: 4px;
   width: 12px;
   height: 12px;
   background-color: var(--bg-deep);
   border: 2px solid var(--mars-bright);
   border-radius: 50%;
+}
+
+.section-alt .timeline-item::before {
+  background-color: var(--bg-panel);
 }
 
 .timeline-marker {
@@ -454,130 +547,200 @@ header#home h1 {
 .timeline-content p {
   color: var(--text-dim);
   margin: 0;
-  max-width: 560px;
+  max-width: 640px;
 }
 
-/* ============ GALLERY ============ */
-.gallery-grid {
+/* ============ WHITE PAPER ============ */
+.wp-layout {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+  margin-top: 8px;
 }
 
-.gallery-placeholder {
-  aspect-ratio: 4 / 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bg-panel-alt);
-  border: 1px dashed var(--line);
-  border-radius: var(--radius);
-  color: var(--text-faint);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-}
-
-/* ============ FOOTER ============ */
-footer {
-  text-align: center;
-  padding: 40px 24px;
-  border-top: 1px solid var(--line);
-  color: var(--text-faint);
-  font-size: 0.85rem;
-}
-
-.footer-author {
-  margin-top: 6px;
-  color: var(--text-faint);
-}
-
-/* ============ RESPONSIVE ============ */
-@media (max-width: 860px) {
-  .section-grid { grid-template-columns: 1fr; }
-  .card-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 640px) {
-  #nav-toggle { display: flex; }
-
-  #nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    background-color: var(--bg-panel);
-    border-bottom: 1px solid var(--line);
-    padding: 8px;
-  }
-
-  #nav-links.open { display: flex; }
-
-  #nav-links a { padding: 12px 16px; }
-
-  .card-grid { grid-template-columns: 1fr; }
-  .gallery-grid { grid-template-columns: 1fr; }
-  .section { padding: 64px 20px; }
-  .stat-row { gap: 28px; }
-}
-/* ============ GALLERY IMAGES ============ */
-.gallery-item {
-  margin: 0;
-  background-color: var(--bg-panel-alt);
+.wp-cover {
+  aspect-ratio: 1 / 1.414;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  overflow: hidden;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  background-color: var(--bg-panel-alt);
+  padding: 32px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.gallery-item:hover {
-  border-color: var(--blue-glow);
-  transform: translateY(-4px);
-}
-
-.gallery-item img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.gallery-item figcaption {
-  padding: 12px 16px;
+.wp-cover .wpc-top {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-dim);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.wp-cover .wpc-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.wp-cover .wpc-sub {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--mars-bright);
+  margin-top: 6px;
+}
+
+.wp-cover .wpc-rule {
+  width: 48px;
+  height: 1px;
+  background-color: var(--mars-bright);
+  margin: 20px 0;
+}
+
+.wp-cover .wpc-meta {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  line-height: 2;
+  color: var(--text-faint);
+}
+
+.wp-specs {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
   border-top: 1px solid var(--line);
 }
-/* ============ SCROLL REVEAL ============ */
-/* Раздел начинает невидимым и чуть смещённым вниз... */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+
+.wp-specs li {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 0 18px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.94rem;
 }
 
-/* ...и плавно появляется, когда попадает в поле зрения */
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+.wp-specs .wp-k {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-top: 4px;
 }
 
-/* Если у пользователя включён режим "меньше анимации" — показываем сразу */
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
+.wp-specs .wp-v { overflow-wrap: anywhere; }
+
+.wp-layout .buttons { justify-content: flex-start; margin-top: 0; }
+
+/* ============ STATUS BOARD ============ */
+.status-board {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background-color: var(--bg-panel-alt);
+  overflow: hidden;
+  max-width: 760px;
+  margin: 8px auto 0;
 }
 
-/* ============ ACTIVE NAV LINK ============ */
-/* Пункт меню текущего раздела подсвечивается оранжевым */
-#nav-links a.active {
-  color: var(--mars-bright);
-  background-color: rgba(193, 68, 14, 0.12);
+.section-alt .status-board { background-color: var(--bg-deep); }
+
+.status-board .sb-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
 }
+
+.status-board ul { list-style: none; margin: 0; padding: 0; }
+
+.status-board li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.status-board li:last-child { border-bottom: 0; }
+
+.status-board .sb-tick { color: var(--green-ok); flex: none; line-height: 1; }
+
+.status-board .sb-state {
+  margin-left: auto;
+  flex: none;
+  color: var(--green-ok);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.status-board li.open .sb-tick,
+.status-board li.open .sb-state { color: var(--mars-bright); }
+
+/* ============ CONTACT FORM ============ */
+.contact-form {
+  max-width: 480px;
+  margin: 32px auto 0;
+  display: grid;
+  gap: 14px;
+  text-align: left;
+}
+
+.contact-form label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: -6px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background-color: var(--bg-panel-alt);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.contact-form textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder { color: var(--text-faint); }
+
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible {
+  outline: 2px solid var(--mars-bright);
+  outline-offset: 1px;
+  border-color: var(--mars-bright);
+}
+
+.contact-form button {
+  cursor: pointer;
+  font-family: inherit;
+  justify-self: start;
+}
+
 /* ============ CONTACT EMAIL ============ */
 .contact-email {
   margin-top: 28px;
@@ -599,8 +762,223 @@ footer {
   border-bottom: 1px solid rgba(255, 107, 53, 0.4);
 }
 
-.contact-email a:hover {
-  border-bottom-color: var(--mars-bright);
+.contact-email a:hover { border-bottom-color: var(--mars-bright); }
+
+/* ============ FOOTER ============ */
+footer {
+  text-align: center;
+  padding: 56px 24px 40px;
+  border-top: 1px solid var(--line);
+  color: var(--text-faint);
+  font-size: 0.85rem;
 }
 
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 32px;
+  max-width: var(--max-width);
+  margin: 0 auto 40px;
+  text-align: left;
+}
 
+.footer-cols h3 {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 14px;
+}
+
+.footer-cols p { margin: 0 0 4px; color: var(--text-dim); }
+.footer-cols .fc-name { color: var(--text); font-size: 0.95rem; }
+.footer-cols ul { list-style: none; margin: 0; padding: 0; }
+.footer-cols li { margin-bottom: 8px; font-size: 0.9rem; }
+
+.footer-author {
+  margin-top: 6px;
+  color: var(--text-faint);
+}
+
+/* ============ BACK TO TOP ============ */
+#to-top {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 90;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: rgba(11, 18, 32, 0.94);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  font-size: 1.25rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, border-color 0.2s ease;
+}
+
+#to-top.show { opacity: 1; pointer-events: auto; }
+#to-top:hover { border-color: var(--mars-bright); }
+#to-top:focus-visible { opacity: 1; pointer-events: auto; }
+
+/* ============ SCROLL REVEAL ============ */
+/* Раздел начинает невидимым и чуть смещённым вниз... */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* ...и плавно появляется, когда попадает в поле зрения */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Если у пользователя включён режим "меньше анимации" — показываем сразу */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ============ ACTIVE NAV LINK ============ */
+/* Пункт меню текущего раздела подсвечивается оранжевым */
+#nav-links a.active,
+#nav-links a[aria-current="true"] {
+  color: var(--mars-bright);
+  background-color: rgba(193, 68, 14, 0.12);
+}
+
+/* ============ GALLERY ============
+   Not used by the current index.html. Kept so that the diagram and
+   concept-render sections can be restored without rewriting CSS. */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.gallery-item {
+  margin: 0;
+  background-color: var(--bg-panel-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-item:hover {
+  border-color: var(--blue-glow);
+  transform: translateY(-4px);
+}
+
+.gallery-item img { width: 100%; height: auto; display: block; }
+
+.gallery-item figcaption {
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--line);
+}
+
+.gallery-placeholder {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-panel-alt);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+/* ============ STATS ============
+   Also unused by the current index.html; kept for future sections. */
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.stat { display: flex; flex-direction: column; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--mars-bright);
+}
+
+.stat-label { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 980px) {
+  .wp-layout { grid-template-columns: 1fr; gap: 32px; }
+  .wp-cover { max-width: 20rem; }
+}
+
+@media (max-width: 900px) {
+  /* The hamburger now appears before the eight nav links start wrapping
+     onto a second row. It used to switch over only at 640px. */
+  #nav-toggle { display: flex; }
+
+  #nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    background-color: var(--bg-panel);
+    border-bottom: 1px solid var(--line);
+    padding: 8px;
+    max-height: calc(100vh - var(--nav-height));
+    overflow-y: auto;
+  }
+
+  #nav-links.open { display: flex; }
+  #nav-links a { padding: 12px 16px; }
+}
+
+@media (max-width: 860px) {
+  .section-grid { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: 1fr; }
+  .section { padding: 64px 20px; }
+  .stat-row { gap: 28px; }
+  .wp-specs li { grid-template-columns: 1fr; gap: 2px; }
+  .status-board li { padding: 14px 16px; gap: 12px; }
+  .status-board .sb-state { margin-left: 0; width: 100%; }
+}
+
+/* ============ PRINT ============ */
+@media print {
+  #site-nav, #to-top, .scroll-cue, .buttons, .contact-form { display: none; }
+  body { background: #fff; color: #000; }
+  header#home, header#home.has-photo { background: #fff; min-height: 0; padding: 24px 0; }
+  .section, .section-alt, .card, .wp-cover, .status-board { background: #fff !important; border-color: #ccc; }
+  h1, h2, h3, .card p, .section-intro, .timeline-content p { color: #000; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after { content: " [" attr(href) "]"; font-size: 8pt; color: #444; }
+  .card, .timeline-item, .wp-layout { break-inside: avoid; }
+}
