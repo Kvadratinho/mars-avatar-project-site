@@ -1,73 +1,159 @@
-// ============================================================
-// MARS AVATAR PROJECT — SCRIPT
-// 1. Mobile navigation menu toggle
-// 2. Scroll reveal animation for sections
-// 3. Active nav link highlighting while scrolling
-// ============================================================
+/**
+ * MARS AVATAR PROJECT — OFFICIAL WEBSITE SCRIPT (v3.6)
+ * Standards: NASA / JPL / ETH Zürich Academic Presentation
+ * Clean, minimal Vanilla JS for accessibility, interaction, & performance.
+ */
 
-// ---------- 1. Mobile menu ----------
-const navToggle = document.getElementById("nav-toggle");
-const navLinks = document.getElementById("nav-links");
+document.addEventListener('DOMContentLoaded', () => {
+  initSmoothScroll();
+  initActiveNavHighlight();
+  initCopyCitation();
+  initAccessibilityEnhancements();
+});
 
-if (navToggle && navLinks) {
-  navToggle.addEventListener("click", () => {
-    const isOpen = navLinks.classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
+/**
+ * 1. Smooth Scrolling with Offset Compensation for Fixed Header
+ */
+function initSmoothScroll() {
+  const navLinks = document.querySelectorAll('.site-nav a[href^="#"], .skip-link');
+  const headerHeight = document.querySelector('.site-header')?.offsetHeight || 70;
 
-  // Close the mobile menu automatically after a link is tapped
-  navLinks.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href');
+      if (targetId === '#') return;
+
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        e.preventDefault();
+        
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 20;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+
+        // Move focus to target element for accessibility / screen readers
+        targetElement.setAttribute('tabindex', '-1');
+        targetElement.focus({ preventScroll: true });
+      }
     });
   });
 }
 
-// ---------- 2. Scroll reveal ----------
-// Add the .reveal class to every section, then flip on .visible
-// the first time the section enters the viewport.
-const sections = document.querySelectorAll("main .section");
+/**
+ * 2. IntersectionObserver for Active Nav Highlighting
+ */
+function initActiveNavHighlight() {
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('.site-nav a');
 
-sections.forEach((s) => s.classList.add("reveal"));
+  if (!sections.length || !navLinks.length) return;
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
+  const observerOptions = {
+    root: null,
+    rootMargin: '-20% 0px -70% 0px',
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        revealObserver.unobserve(entry.target); // animate once, then leave it
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          if (link.getAttribute('href') === `#${id}`) {
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'location');
+          } else {
+            link.classList.remove('active');
+            link.removeAttribute('aria-current');
+          }
+        });
       }
     });
-  },
-  { threshold: 0.12 }
-);
+  }, observerOptions);
 
-sections.forEach((s) => revealObserver.observe(s));
+  sections.forEach(section => observer.observe(section));
+}
 
-// ---------- 3. Active nav link ----------
-// Watch which section occupies the middle of the screen
-// and highlight the matching menu link.
-const navAnchors = document.querySelectorAll("#nav-links a");
-const watched = document.querySelectorAll("main .section, header#home");
+/**
+ * 3. One-Click Copy Citation Handler
+ */
+function initCopyCitation() {
+  const copyBtn = document.getElementById('copy-citation-btn');
+  const citationTextEl = document.getElementById('academic-citation-text');
 
-function setActive(id) {
-  navAnchors.forEach((a) => {
-    a.classList.toggle("active", a.getAttribute("href") === "#" + id);
+  if (!copyBtn || !citationTextEl) return;
+
+  copyBtn.addEventListener('click', async () => {
+    const textToCopy = citationTextEl.innerText.trim();
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(textToCopy);
+      } else {
+        // Fallback for non-HTTPS or older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = textToCopy;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+
+      // Visual feedback
+      const originalText = copyBtn.innerText;
+      copyBtn.innerText = '✓ Citation Copied';
+      copyBtn.classList.add('copied');
+      copyBtn.setAttribute('aria-label', 'Citation text copied to clipboard');
+
+      setTimeout(() => {
+        copyBtn.innerText = originalText;
+        copyBtn.classList.remove('copied');
+        copyBtn.setAttribute('aria-label', 'Copy formal academic citation');
+      }, 3000);
+
+    } catch (err) {
+      console.error('Failed to copy citation: ', err);
+      copyBtn.innerText = 'Copy Failed';
+      setTimeout(() => {
+        copyBtn.innerText = 'Copy Citation';
+      }, 2000);
+    }
   });
 }
 
-const navObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setActive(entry.target.id);
-      }
-    });
-  },
-  // "Окно" по центру экрана: раздел считается активным,
-  // когда пересекает середину видимой области
-  { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-);
+/**
+ * 4. Accessibility & ARIA Keyboard Helpers
+ */
+function initAccessibilityEnhancements() {
+  // Detect keyboard focus vs mouse focus to optimize focus ring visibility
+  document.body.addEventListener('mousedown', () => {
+    document.body.classList.add('using-mouse');
+  });
 
-watched.forEach((s) => navObserver.observe(s));
+  document.body.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      document.body.classList.remove('using-mouse');
+    }
+  });
+
+  // Ensure external links have appropriate security and accessible attributes
+  const externalLinks = document.querySelectorAll('a[target="_blank"]');
+  externalLinks.forEach(link => {
+    if (!link.getAttribute('rel')) {
+      link.setAttribute('rel', 'noopener noreferrer');
+    }
+    // Append screen-reader indication for opening in new tab
+    if (!link.querySelector('.sr-only-tab')) {
+      const srSpan = document.createElement('span');
+      srSpan.className = 'sr-only';
+      srSpan.innerText = ' (opens in new tab)';
+      link.appendChild(srSpan);
+    }
+  });
+}
