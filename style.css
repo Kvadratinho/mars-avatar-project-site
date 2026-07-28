@@ -62,7 +62,9 @@ h1, h2, h3 {
 
 a { color: inherit; }
 
-img { max-width: 100%; display: block; }
+/* height:auto обязателен: у картинок проставлены атрибуты width/height —
+   без него браузер берёт высоту буквально и растягивает изображение */
+img { max-width: 100%; height: auto; display: block; }
 
 /* Visible keyboard focus everywhere, not only on nav links and buttons */
 :focus-visible {
