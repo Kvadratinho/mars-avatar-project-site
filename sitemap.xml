@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
   <url>
     <loc>https://mars-avatar.com/</loc>
-    <lastmod>2026-07-14</lastmod>
+    <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-  </url>
-</urlset>
 
+    <image:image>
+      <image:loc>https://mars-avatar.com/diagram-signal-path.svg</image:loc>
+      <image:title>Earth–Mars signal path</image:title>
+      <image:caption>Signal path from Earth to Mars through an orbital relay, with a one-way delay of 4 to 22 minutes.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://mars-avatar.com/diagram-three-layers.svg</image:loc>
+      <image:title>Three-layer control model</image:title>
+      <image:caption>Control model of the Mars Avatar Project: Earth command, relay and scheduling, avatar autonomy.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://mars-avatar.com/diagram-fleet.svg</image:loc>
+      <image:title>Robotic avatar fleet</image:title>
+      <image:caption>Robotic avatar fleet on the Martian surface: survey unit, relay unit, manipulator unit.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://mars-avatar.com/unit-survey.jpeg</image:loc>
+      <image:title>Survey Unit</image:title>
+      <image:caption>Concept render of the Survey Unit, a six-wheeled rover with a stereo camera mast.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://mars-avatar.com/unit-manipulator.jpeg</image:loc>
+      <image:title>Manipulator Unit</image:title>
+      <image:caption>Concept render of the Manipulator Unit, a rover with a multi-joint robotic arm.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://mars-avatar.com/unit-relay.jpeg</image:loc>
+      <image:title>Relay Unit</image:title>
+      <image:caption>Concept render of the Relay Unit, a stationary antenna mast with a dish and solar panels.</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

@@ -1,4 +1,11 @@
+# Mars Avatar Project — mars-avatar.com
+# Открытый исследовательский сайт: индексация разрешена полностью.
+
 User-agent: *
 Allow: /
 
+# Служебные файлы индексировать незачем
+Disallow: /*.json$
+
+# Карта сайта
 Sitemap: https://mars-avatar.com/sitemap.xml
