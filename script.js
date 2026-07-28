@@ -1,73 +1,152 @@
 // ============================================================
 // MARS AVATAR PROJECT — SCRIPT
-// 1. Mobile navigation menu toggle
-// 2. Scroll reveal animation for sections
-// 3. Active nav link highlighting while scrolling
+// 1. Mobile navigation menu
+// 2. Scroll reveal for sections
+// 3. Active nav link highlighting
+// 4. Back-to-top button
+//
+// Everything degrades safely: if IntersectionObserver is missing,
+// the page stays fully readable and only the effects are skipped.
 // ============================================================
 
-// ---------- 1. Mobile menu ----------
-const navToggle = document.getElementById("nav-toggle");
-const navLinks = document.getElementById("nav-links");
+(function () {
+  "use strict";
 
-if (navToggle && navLinks) {
-  navToggle.addEventListener("click", () => {
-    const isOpen = navLinks.classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  });
+  var supportsIO = "IntersectionObserver" in window;
+  var reduceMotion =
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Close the mobile menu automatically after a link is tapped
-  navLinks.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
+  // ---------- 1. Mobile menu ----------
+  var navToggle = document.getElementById("nav-toggle");
+  var navLinks = document.getElementById("nav-links");
+
+  function closeMenu() {
+    if (!navLinks || !navToggle) return;
+    navLinks.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  }
+
+  if (navToggle && navLinks) {
+    navToggle.setAttribute("aria-controls", "nav-links");
+
+    navToggle.addEventListener("click", function () {
+      var isOpen = navLinks.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
     });
-  });
-}
 
-// ---------- 2. Scroll reveal ----------
-// Add the .reveal class to every section, then flip on .visible
-// the first time the section enters the viewport.
-const sections = document.querySelectorAll("main .section");
+    // Close after a link is tapped
+    Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function (link) {
+      link.addEventListener("click", closeMenu);
+    });
 
-sections.forEach((s) => s.classList.add("reveal"));
-
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        revealObserver.unobserve(entry.target); // animate once, then leave it
+    // Close on Escape and return focus to the toggle
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navLinks.classList.contains("open")) {
+        closeMenu();
+        navToggle.focus();
       }
     });
-  },
-  { threshold: 0.12 }
-);
 
-sections.forEach((s) => revealObserver.observe(s));
-
-// ---------- 3. Active nav link ----------
-// Watch which section occupies the middle of the screen
-// and highlight the matching menu link.
-const navAnchors = document.querySelectorAll("#nav-links a");
-const watched = document.querySelectorAll("main .section, header#home");
-
-function setActive(id) {
-  navAnchors.forEach((a) => {
-    a.classList.toggle("active", a.getAttribute("href") === "#" + id);
-  });
-}
-
-const navObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setActive(entry.target.id);
-      }
+    // Close when tapping anywhere outside the menu
+    document.addEventListener("click", function (e) {
+      if (!navLinks.classList.contains("open")) return;
+      if (navLinks.contains(e.target) || navToggle.contains(e.target)) return;
+      closeMenu();
     });
-  },
-  // "Окно" по центру экрана: раздел считается активным,
-  // когда пересекает середину видимой области
-  { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-);
 
-watched.forEach((s) => navObserver.observe(s));
+    // Ширина, на которой гамбургер исчезает, задана в style.css как 640px —
+    // держим эти два значения согласованными.
+    if (window.matchMedia) {
+      var desktop = window.matchMedia("(min-width: 641px)");
+      var onChange = function (e) { if (e.matches) closeMenu(); };
+      if (desktop.addEventListener) desktop.addEventListener("change", onChange);
+      else if (desktop.addListener) desktop.addListener(onChange);
+    }
+  }
+
+  // ---------- 2. Scroll reveal ----------
+  // .reveal вешается скриптом: если JS отключён или IntersectionObserver
+  // не поддерживается, ни один раздел не будет скрыт.
+  var sections = document.querySelectorAll("main .section");
+
+  if (supportsIO && !reduceMotion && sections.length) {
+    Array.prototype.forEach.call(sections, function (s) { s.classList.add("reveal"); });
+
+    // rootMargin вместо процентного threshold: раздел выше экрана никогда
+    // не наберёт 12% видимости и остался бы невидимым навсегда.
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target); // animate once, then leave it
+        });
+      },
+      { threshold: 0, rootMargin: "0px 0px -12% 0px" }
+    );
+
+    Array.prototype.forEach.call(sections, function (s) { revealObserver.observe(s); });
+  }
+
+  // ---------- 3. Active nav link ----------
+  var navAnchors = document.querySelectorAll("#nav-links a");
+  var watched = document.querySelectorAll("main .section, header#home");
+
+  if (supportsIO && navAnchors.length && watched.length) {
+    var current = null;
+
+    var setActive = function (id) {
+      if (id === current) return;
+      current = id;
+      Array.prototype.forEach.call(navAnchors, function (a) {
+        var match = a.getAttribute("href") === "#" + id;
+        a.classList.toggle("active", match);
+        // aria-current сообщает состояние скринридеру, а не только цветом
+        if (match) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    };
+
+    // "Окно" по центру экрана: раздел считается активным,
+    // когда пересекает середину видимой области.
+    var navObserver = new IntersectionObserver(
+      function (entries) {
+        // Берём запись, ближайшую к центру, а не первую в колбэке
+        var best = null;
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+        });
+        if (best && best.target.id) setActive(best.target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+
+    Array.prototype.forEach.call(watched, function (s) { navObserver.observe(s); });
+  }
+
+  // ---------- 4. Back to top ----------
+  var toTop = document.getElementById("to-top");
+
+  if (toTop) {
+    var ticking = false;
+
+    var update = function () {
+      toTop.classList.toggle("show", window.scrollY > 600);
+      ticking = false;
+    };
+
+    // requestAnimationFrame убирает переключение класса с горячего пути прокрутки
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(update);
+      },
+      { passive: true }
+    );
+
+    update();
+  }
+})();
