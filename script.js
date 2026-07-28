@@ -1,227 +1,150 @@
-/* ============================================================================
-   Mars Avatar Project — script.js
-   ----------------------------------------------------------------------------
-   No dependencies, no build step. Every behaviour below is progressive: the
-   page is fully readable and navigable with JavaScript disabled.
-
-     01  Helpers
-     02  Navigation drawer (small screens)
-     03  Reading progress
-     04  Document-index scroll spy
-     05  Back to top
-     06  Copy to clipboard
-   ========================================================================== */
+// ============================================================
+// MARS AVATAR PROJECT — SCRIPT
+// 1. Mobile navigation menu
+// 2. Scroll reveal for sections
+// 3. Active nav link highlighting
+// 4. Back-to-top button
+//
+// Everything degrades safely: if IntersectionObserver is missing,
+// the page stays fully readable and only the effects are skipped.
+// ============================================================
 
 (function () {
-  'use strict';
+  "use strict";
 
-  /* ── 01 · HELPERS ─────────────────────────────────────────────────────── */
+  var supportsIO = "IntersectionObserver" in window;
+  var reduceMotion =
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  var $  = function (sel, ctx) { return (ctx || document).querySelector(sel); };
-  var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+  // ---------- 1. Mobile menu ----------
+  var navToggle = document.getElementById("nav-toggle");
+  var navLinks = document.getElementById("nav-links");
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function closeMenu() {
+    if (!navLinks || !navToggle) return;
+    navLinks.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  }
 
-  /* Run a callback at most once per animation frame. */
-  function onFrame(fn) {
-    var queued = false;
-    return function () {
-      if (queued) return;
-      queued = true;
-      window.requestAnimationFrame(function () {
-        queued = false;
-        fn();
+  if (navToggle && navLinks) {
+    navToggle.setAttribute("aria-controls", "nav-links");
+
+    navToggle.addEventListener("click", function () {
+      var isOpen = navLinks.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    // Close after a link is tapped
+    Array.prototype.forEach.call(navLinks.querySelectorAll("a"), function (link) {
+      link.addEventListener("click", closeMenu);
+    });
+
+    // Close on Escape and return focus to the toggle
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navLinks.classList.contains("open")) {
+        closeMenu();
+        navToggle.focus();
+      }
+    });
+
+    // Close when tapping anywhere outside the menu
+    document.addEventListener("click", function (e) {
+      if (!navLinks.classList.contains("open")) return;
+      if (navLinks.contains(e.target) || navToggle.contains(e.target)) return;
+      closeMenu();
+    });
+
+    // If the viewport grows back to desktop width, drop the open state
+    if (window.matchMedia) {
+      var desktop = window.matchMedia("(min-width: 901px)");
+      var onChange = function (e) { if (e.matches) closeMenu(); };
+      if (desktop.addEventListener) desktop.addEventListener("change", onChange);
+      else if (desktop.addListener) desktop.addListener(onChange);
+    }
+  }
+
+  // ---------- 2. Scroll reveal ----------
+  // .reveal is added by script, so with JS disabled nothing is ever hidden.
+  var sections = document.querySelectorAll("main .section");
+
+  if (supportsIO && !reduceMotion && sections.length) {
+    Array.prototype.forEach.call(sections, function (s) { s.classList.add("reveal"); });
+
+    // rootMargin instead of a percentage threshold: a section taller than the
+    // viewport could never reach `threshold: 0.12` and would stay invisible.
+    var revealObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target); // animate once, then leave it
+        });
+      },
+      { threshold: 0, rootMargin: "0px 0px -12% 0px" }
+    );
+
+    Array.prototype.forEach.call(sections, function (s) { revealObserver.observe(s); });
+  }
+
+  // ---------- 3. Active nav link ----------
+  var navAnchors = document.querySelectorAll("#nav-links a");
+  var watched = document.querySelectorAll("main .section, header#home");
+
+  if (supportsIO && navAnchors.length && watched.length) {
+    var current = null;
+
+    function setActive(id) {
+      if (id === current) return;
+      current = id;
+      Array.prototype.forEach.call(navAnchors, function (a) {
+        var match = a.getAttribute("href") === "#" + id;
+        a.classList.toggle("active", match);
+        // aria-current exposes the state to screen readers, not just to sighted users
+        if (match) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
       });
+    }
+
+    // "Окно" по центру экрана: раздел считается активным,
+    // когда пересекает середину видимой области.
+    var navObserver = new IntersectionObserver(
+      function (entries) {
+        // Pick the entry closest to the middle instead of trusting callback order
+        var best = null;
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          if (!best || entry.intersectionRatio > best.intersectionRatio) best = entry;
+        });
+        if (best && best.target.id) setActive(best.target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+
+    Array.prototype.forEach.call(watched, function (s) { navObserver.observe(s); });
+  }
+
+  // ---------- 4. Back to top ----------
+  var toTop = document.getElementById("to-top");
+
+  if (toTop) {
+    var ticking = false;
+
+    var update = function () {
+      toTop.classList.toggle("show", window.scrollY > 600);
+      ticking = false;
     };
+
+    // requestAnimationFrame keeps the class toggle off the scroll hot path
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(update);
+      },
+      { passive: true }
+    );
+
+    update();
   }
-
-  /* Polite live region, created once, for non-visual confirmation messages. */
-  var announcer = null;
-  function announce(message) {
-    if (!announcer) {
-      announcer = document.createElement('div');
-      announcer.setAttribute('role', 'status');
-      announcer.setAttribute('aria-live', 'polite');
-      announcer.className = 'visually-hidden';
-      document.body.appendChild(announcer);
-    }
-    announcer.textContent = '';
-    window.setTimeout(function () { announcer.textContent = message; }, 60);
-  }
-
-
-  /* ── 02 · NAVIGATION DRAWER ───────────────────────────────────────────── */
-
-  var toggle = $('[data-navtoggle]');
-  var drawer = $('[data-sitenav]');
-
-  if (toggle && drawer) {
-    var setDrawer = function (open) {
-      toggle.setAttribute('aria-expanded', String(open));
-      drawer.classList.toggle('is-open', open);
-    };
-
-    toggle.addEventListener('click', function () {
-      setDrawer(toggle.getAttribute('aria-expanded') !== 'true');
-    });
-
-    /* Close after choosing a section, so the target is not hidden behind it. */
-    drawer.addEventListener('click', function (event) {
-      if (event.target.closest('a')) setDrawer(false);
-    });
-
-    /* Escape closes the drawer and returns focus to the control that opened it. */
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
-        setDrawer(false);
-        toggle.focus();
-      }
-    });
-
-    /* A click outside the header dismisses the drawer. */
-    document.addEventListener('click', function (event) {
-      if (toggle.getAttribute('aria-expanded') !== 'true') return;
-      if (event.target.closest('.masthead')) return;
-      setDrawer(false);
-    });
-
-    /* Widening past the desktop breakpoint retires the drawer entirely. */
-    var wide = window.matchMedia('(min-width: 1080px)');
-    var syncBreakpoint = function () { if (wide.matches) setDrawer(false); };
-    if (wide.addEventListener) wide.addEventListener('change', syncBreakpoint);
-    else if (wide.addListener) wide.addListener(syncBreakpoint);
-  }
-
-
-  /* ── 03 · READING PROGRESS ────────────────────────────────────────────── */
-
-  var progressBar = $('[data-progress]');
-
-  function updateProgress() {
-    if (!progressBar) return;
-    var doc = document.documentElement;
-    var scrollable = doc.scrollHeight - window.innerHeight;
-    var ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
-    progressBar.style.width = Math.min(Math.max(ratio, 0), 1) * 100 + '%';
-  }
-
-
-  /* ── 04 · DOCUMENT-INDEX SCROLL SPY ───────────────────────────────────── */
-
-  var spy = $('[data-spy]');
-  var spyLinks = spy ? $$('a[href^="#"]', spy) : [];
-
-  var targets = spyLinks
-    .map(function (link) {
-      return { link: link, section: document.getElementById(link.hash.slice(1)) };
-    })
-    .filter(function (entry) { return entry.section; });
-
-  var currentLink = null;
-
-  function updateSpy() {
-    if (!targets.length) return;
-
-    /* Anchor the test line just below the sticky masthead. */
-    var line = window.scrollY + 140;
-    var active = targets[0];
-
-    for (var i = 0; i < targets.length; i++) {
-      if (targets[i].section.offsetTop <= line) active = targets[i];
-    }
-
-    /* At the very bottom, mark the last section regardless of offsets. */
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
-      active = targets[targets.length - 1];
-    }
-
-    if (active.link === currentLink) return;
-    if (currentLink) currentLink.removeAttribute('aria-current');
-    active.link.setAttribute('aria-current', 'true');
-    currentLink = active.link;
-  }
-
-
-  /* ── 05 · BACK TO TOP ─────────────────────────────────────────────────── */
-
-  var toTop = $('#to-top');
-
-  function updateToTop() {
-    if (toTop) toTop.classList.toggle('show', window.scrollY > 600);
-  }
-
-
-  /* One scroll listener drives the progress rule, the index and the control. */
-  var onScroll = onFrame(function () {
-    updateProgress();
-    updateSpy();
-    updateToTop();
-  });
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  window.addEventListener('load', onScroll);
-  updateProgress();
-  updateSpy();
-  updateToTop();
-  updateToTop();
-
-
-  /* ── 06 · COPY TO CLIPBOARD ───────────────────────────────────────────── */
-
-  /* Falls back to a hidden textarea where the async Clipboard API is absent
-     or blocked (for example on non-secure origins). */
-  function writeToClipboard(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(text);
-    }
-    return new Promise(function (resolve, reject) {
-      var field = document.createElement('textarea');
-      field.value = text;
-      field.setAttribute('readonly', '');
-      field.style.position = 'fixed';
-      field.style.top = '-1000px';
-      document.body.appendChild(field);
-      field.select();
-      try {
-        document.execCommand('copy') ? resolve() : reject();
-      } catch (error) {
-        reject(error);
-      } finally {
-        document.body.removeChild(field);
-      }
-    });
-  }
-
-  $$('.copy').forEach(function (button) {
-    var label = button.textContent;
-
-    button.addEventListener('click', function () {
-      var sourceId = button.getAttribute('data-copy-from');
-      var text = sourceId
-        ? (document.getElementById(sourceId) || {}).textContent
-        : button.getAttribute('data-copy');
-
-      if (!text) return;
-      text = text.replace(/\s+/g, ' ').trim();
-
-      writeToClipboard(text).then(
-        function () {
-          button.textContent = 'Copied';
-          button.setAttribute('data-copied', 'true');
-          announce('Copied to clipboard.');
-        },
-        function () {
-          button.textContent = 'Copy failed';
-          announce('Copy failed. Select the text and copy it manually.');
-        }
-      );
-
-      window.setTimeout(function () {
-        button.textContent = label;
-        button.removeAttribute('data-copied');
-      }, reduceMotion ? 3000 : 2200);
-    });
-  });
-
-}());
+})();
