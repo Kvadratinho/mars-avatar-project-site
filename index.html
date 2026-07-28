@@ -23,6 +23,8 @@
 <!-- Scholarly metadata (Google Scholar / Highwire) -->
 <meta name="citation_title" content="Mars Avatar Project: Control Without Presence">
 <meta name="citation_author" content="Khalanhot, Oleksandr">
+<meta name="citation_author_orcid" content="https://orcid.org/0009-0008-9605-1625">
+<meta name="citation_language" content="en">
 <meta name="citation_publication_date" content="2026">
 <meta name="citation_doi" content="10.5281/zenodo.21185807">
 <meta name="citation_pdf_url" content="https://zenodo.org/records/21627800/files/Mars%20Avatar%20White%20Paper%20v3.6.pdf">
@@ -86,11 +88,17 @@
       "@type": "Person",
       "@id": "https://mars-avatar.com/#author",
       "name": "Oleksandr Khalanhot",
+      "jobTitle": "Independent Researcher",
       "url": "https://mars-avatar.com/",
       "email": "mailto:kvadratinho@gmail.com",
-      "identifier": "https://orcid.org/0000-0000-0000-0000",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Zürich",
+        "addressCountry": "CH"
+      },
+      "identifier": "https://orcid.org/0009-0008-9605-1625",
       "sameAs": [
-        "https://orcid.org/0000-0000-0000-0000",
+        "https://orcid.org/0009-0008-9605-1625",
         "https://github.com/Kvadratinho",
         "https://x.com/Mars_avatar",
         "https://zenodo.org/records/21627800"
@@ -196,6 +204,7 @@
       <li><a href="#roadmap">Roadmap</a></li>
       <li><a href="#limitations">Limitations</a></li>
       <li><a href="#paper">White Paper</a></li>
+      <li><a href="#gallery">Diagrams</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -218,7 +227,8 @@
         <li><a href="#roadmap"><span class="rail__num">08</span> Roadmap</a></li>
         <li><a href="#limitations"><span class="rail__num">09</span> Limitations</a></li>
         <li><a href="#paper"><span class="rail__num">10</span> White Paper</a></li>
-        <li><a href="#contact"><span class="rail__num">11</span> Contact</a></li>
+        <li><a href="#gallery"><span class="rail__num">11</span> Diagram set</a></li>
+        <li><a href="#contact"><span class="rail__num">12</span> Contact</a></li>
       </ol>
     </nav>
     <p class="rail__meta">
@@ -386,34 +396,109 @@
       <p class="section__id">§ 04</p>
       <h2 id="arch-title">Architecture</h2>
       <p class="section__intro">
-        Four stages separate what a human decides from what a machine executes.
-        Mission AI is the central coordination layer: every goal that leaves Earth and
-        every result that returns passes through it.
+        Six stages separate what a human decides from what a machine executes.
+        Every interface is specified around one fixed condition: no part of the chain
+        may assume a real-time response. Authority flows downward; evidence returns on
+        the same delayed channel.
       </p>
 
-      <ol class="flow" aria-label="Architecture flow from human operator to scientific results">
+      <ol class="flow" aria-label="Architecture flow from human operator to scientific operations">
         <li class="flow__step">
-          <p class="flow__tier">Tier 1 · Earth</p>
+          <p class="flow__tier">Stage 01 · Earth</p>
           <h3>Human operator</h3>
-          <p>Defines objectives, constraints and safety limits. Reviews returned results and authorises the next goal package. No moment-to-moment piloting occurs at any point.</p>
+          <p>Defines objectives, constraints, priorities and acceptance criteria. Retains authority over every irreversible action. The operator reviews outcomes and authorises the next objective — the operator never steers.</p>
         </li>
         <li class="flow__step flow__step--core">
-          <p class="flow__tier">Tier 2 · Coordination</p>
+          <p class="flow__tier">Stage 02 · Coordination</p>
           <h3>Mission AI</h3>
-          <p>Translates goals into an executable, monitored plan across the fleet; maintains the shared world model; schedules communication; manages faults and degradation.</p>
+          <p>Translates objectives into executable tasks, allocates them across the fleet, monitors execution, and manages faults within its assigned decision class. Holds the fleet's shared model of the mission.</p>
           <p class="flow__badge">Principal original contribution</p>
         </li>
         <li class="flow__step">
-          <p class="flow__tier">Tier 3 · Mars surface</p>
-          <h3>Robotic fleet</h3>
-          <p>Specialised avatars execute allocated tasks with local autonomy — path planning, hazard response, manipulation — on timescales of seconds, without waiting for Earth.</p>
+          <p class="flow__tier">Stage 03 · Link</p>
+          <h3>Deep space communication</h3>
+          <p>Uplink and downlink scheduled against limited windows. Traffic is prioritised by information value rather than by request order. This is where the 4–22 minute one-way delay is incurred.</p>
         </li>
         <li class="flow__step">
-          <p class="flow__tier">Tier 4 · Return</p>
-          <h3>Scientific results</h3>
-          <p>Measurements, samples, imagery and telemetry are prioritised, queued and returned within the available communication windows, closing the supervisory loop.</p>
+          <p class="flow__tier">Stage 04 · Relay</p>
+          <h3>Mars relay network</h3>
+          <p>Orbital and surface relays extend local coverage and buffer traffic between contact periods, so that units out of direct contact are not out of the mission.</p>
+        </li>
+        <li class="flow__step">
+          <p class="flow__tier">Stage 05 · Mars surface</p>
+          <h3>Autonomous robotic fleet</h3>
+          <p>Specialised avatars execute tasks on the surface, respond to hazards within seconds, and negotiate reallocation among themselves when a unit degrades or a plan is invalidated.</p>
+        </li>
+        <li class="flow__step">
+          <p class="flow__tier">Stage 06 · Return</p>
+          <h3>Scientific operations</h3>
+          <p>Measurements, samples and constructed infrastructure, returned with provenance and with the decision record that produced them — closing the supervisory loop.</p>
         </li>
       </ol>
+
+      <figure class="figure" aria-labelledby="fig2-cap">
+        <div class="figure__frame">
+          <svg viewBox="0 0 1160 300" role="img" aria-labelledby="fig2-title fig2-desc">
+            <title id="fig2-title">Six-stage supervisory control chain</title>
+            <desc id="fig2-desc">A closed loop of six stages running left to right: human operator, Mission AI, deep space communication, Mars relay network, robotic fleet, and scientific operations. Evidence returns from the last stage to the first along the same delayed channel. The one-way delay of four to twenty-two minutes is incurred at the deep space communication stage.</desc>
+
+            <defs>
+              <marker id="arw-a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path class="dg-head" d="M0 0 L8 4 L0 8 z"/>
+              </marker>
+            </defs>
+
+            <text class="dg-n" x="484" y="34" text-anchor="middle">DELAY INCURRED HERE · 4–22 MIN ONE-WAY</text>
+
+            <line class="dg-line" x1="180" y1="100" x2="208" y2="100" marker-end="url(#arw-a)"/>
+            <line class="dg-line" x1="372" y1="100" x2="400" y2="100" marker-end="url(#arw-a)"/>
+            <line class="dg-line" x1="564" y1="100" x2="592" y2="100" marker-end="url(#arw-a)"/>
+            <line class="dg-line" x1="756" y1="100" x2="784" y2="100" marker-end="url(#arw-a)"/>
+            <line class="dg-line" x1="948" y1="100" x2="976" y2="100" marker-end="url(#arw-a)"/>
+
+            <path class="dg-line" d="M1060 152 L1060 226 L100 226 L100 158" marker-end="url(#arw-a)"/>
+            <text class="dg-l" x="580" y="218" text-anchor="middle">EVIDENCE RETURNS ON THE SAME DELAYED CHANNEL</text>
+
+            <rect class="dg-box" x="20" y="48" width="160" height="104"/>
+            <text class="dg-l" x="32" y="70" text-anchor="start">01</text>
+            <text class="dg-t" x="100" y="96" text-anchor="middle">Human</text>
+            <text class="dg-t" x="100" y="114" text-anchor="middle">operator</text>
+            <text class="dg-s" x="100" y="136" text-anchor="middle">sets objectives</text>
+            <rect class="dg-box dg-core" x="212" y="48" width="160" height="104"/>
+            <text class="dg-n" x="224" y="70" text-anchor="start">02</text>
+            <text class="dg-t" x="292" y="104" text-anchor="middle">Mission AI</text>
+            <text class="dg-s" x="292" y="136" text-anchor="middle">allocates and monitors</text>
+            <rect class="dg-box dg-core" x="404" y="48" width="160" height="104"/>
+            <text class="dg-n" x="416" y="70" text-anchor="start">03</text>
+            <text class="dg-t" x="484" y="96" text-anchor="middle">Deep space</text>
+            <text class="dg-t" x="484" y="114" text-anchor="middle">communication</text>
+            <text class="dg-s" x="484" y="136" text-anchor="middle">4–22 min one-way</text>
+            <rect class="dg-box" x="596" y="48" width="160" height="104"/>
+            <text class="dg-l" x="608" y="70" text-anchor="start">04</text>
+            <text class="dg-t" x="676" y="96" text-anchor="middle">Mars relay</text>
+            <text class="dg-t" x="676" y="114" text-anchor="middle">network</text>
+            <text class="dg-s" x="676" y="136" text-anchor="middle">buffers between windows</text>
+            <rect class="dg-box" x="788" y="48" width="160" height="104"/>
+            <text class="dg-l" x="800" y="70" text-anchor="start">05</text>
+            <text class="dg-t" x="868" y="96" text-anchor="middle">Robotic</text>
+            <text class="dg-t" x="868" y="114" text-anchor="middle">fleet</text>
+            <text class="dg-s" x="868" y="136" text-anchor="middle">executes locally</text>
+            <rect class="dg-box" x="980" y="48" width="160" height="104"/>
+            <text class="dg-l" x="992" y="70" text-anchor="start">06</text>
+            <text class="dg-t" x="1060" y="96" text-anchor="middle">Scientific</text>
+            <text class="dg-t" x="1060" y="114" text-anchor="middle">operations</text>
+            <text class="dg-s" x="1060" y="136" text-anchor="middle">returns evidence</text>
+
+            <text class="dg-l" x="100" y="268" text-anchor="middle">AUTHORITY STAYS HERE</text>
+            <text class="dg-l" x="868" y="268" text-anchor="middle">EXECUTION HAPPENS HERE</text>
+          </svg>
+        </div>
+        <figcaption id="fig2-cap">
+          Fig. 2 — Six-stage supervisory chain. The loop closes only through the
+          delayed link, so every decision that must be made faster than the round
+          trip has to be taken on the Mars side of stage 03.
+        </figcaption>
+      </figure>
     </section>
 
     <!-- --------------------------- MISSION AI --------------------------- -->
@@ -440,6 +525,60 @@
         <article class="fn"><h3>Degradation hierarchy</h3><p>An ordered set of reduced-capability modes, so that the system loses throughput rather than the mission when conditions worsen.</p></article>
         <article class="fn"><h3>Communication scheduling</h3><p>Prioritises and queues uplink and downlink traffic against limited, intermittent windows and finite relay bandwidth.</p></article>
       </div>
+
+      <figure class="figure" aria-labelledby="fig3-cap">
+        <div class="figure__frame">
+          <svg viewBox="0 0 860 250" role="img" aria-labelledby="fig3-title fig3-desc">
+            <title id="fig3-title">Goal package round trip</title>
+            <desc id="fig3-desc">A left-to-right timeline. A goal package is uplinked at time zero, received and allocated by Mission AI after four to twenty-two minutes, executed locally by the fleet over hours to sols, queued for downlink, and observed by the operator four to twenty-two minutes later. The minimum observer lag is eight to forty-four minutes.</desc>
+
+            <defs>
+              <marker id="arw-b" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path class="dg-head" d="M0 0 L8 4 L0 8 z"/>
+              </marker>
+            </defs>
+
+            <!-- execution band -->
+            <rect class="dg-band" x="250" y="106" width="310" height="26"/>
+
+            <!-- axis -->
+            <line class="dg-line" x1="40" y1="119" x2="826" y2="119" marker-end="url(#arw-b)"/>
+
+            <!-- ticks -->
+            <line class="dg-tick" x1="60" y1="100" x2="60" y2="138"/>
+            <line class="dg-tick" x1="250" y1="100" x2="250" y2="138"/>
+            <line class="dg-tick" x1="560" y1="100" x2="560" y2="138"/>
+            <line class="dg-tick" x1="780" y1="100" x2="780" y2="138"/>
+
+            <!-- events above -->
+            <text class="dg-t" x="60" y="62" text-anchor="start">Goal package</text>
+            <text class="dg-s" x="60" y="80" text-anchor="start">uplinked from Earth</text>
+
+            <text class="dg-t" x="250" y="62" text-anchor="middle">Received</text>
+            <text class="dg-s" x="250" y="80" text-anchor="middle">decomposed · allocated</text>
+
+            <text class="dg-t" x="560" y="62" text-anchor="middle">Results queued</text>
+            <text class="dg-s" x="560" y="80" text-anchor="middle">prioritised for downlink</text>
+
+            <text class="dg-t" x="800" y="62" text-anchor="end">Operator observes</text>
+            <text class="dg-s" x="800" y="80" text-anchor="end">a state already past</text>
+
+            <!-- durations below -->
+            <text class="dg-n" x="155" y="166" text-anchor="middle">4–22 MIN</text>
+            <text class="dg-l" x="405" y="166" text-anchor="middle">LOCAL EXECUTION · HOURS TO SOLS</text>
+            <text class="dg-n" x="670" y="166" text-anchor="middle">4–22 MIN</text>
+
+            <!-- total span -->
+            <path class="dg-span" d="M60 200 L60 208 L780 208 L780 200"/>
+            <text class="dg-l" x="420" y="230" text-anchor="middle">MINIMUM OBSERVER LAG · 8–44 MIN, PLUS EXECUTION AND WINDOW WAIT</text>
+          </svg>
+        </div>
+        <figcaption id="fig3-cap">
+          Fig. 3 — Goal package round trip. No control loop closes inside the
+          execution band, which is why coordination has to be resident with the
+          fleet rather than with the operator.
+        </figcaption>
+      </figure>
 
       <p class="note">
         Authority boundary: Mission AI does not set mission priorities. Which site to
@@ -497,6 +636,74 @@
           <p>Short-duration aerial survey for route scouting, hazard identification and rapid coverage of terrain that ground units cannot reach.</p>
         </article>
       </div>
+
+      <figure class="figure" aria-labelledby="fig4-cap">
+        <div class="figure__frame">
+          <svg viewBox="0 0 860 420" role="img" aria-labelledby="fig4-title fig4-desc">
+            <title id="fig4-title">Fleet coordination topology</title>
+            <desc id="fig4-desc">Six specialised units — scientific rover, construction robot, cargo robot, maintenance robot, laboratory unit and reconnaissance drone — each linked to a central Mission AI node holding the shared world model. Links are drawn as intermittent to indicate that connectivity between units is not continuous.</desc>
+
+            <!-- links, drawn beneath the nodes -->
+            <g class="dg-link">
+              <line x1="430" y1="210" x2="110" y2="60"/>
+              <line x1="430" y1="210" x2="430" y2="30"/>
+              <line x1="430" y1="210" x2="750" y2="60"/>
+              <line x1="430" y1="210" x2="750" y2="360"/>
+              <line x1="430" y1="210" x2="430" y2="390"/>
+              <line x1="430" y1="210" x2="110" y2="360"/>
+            </g>
+
+            <!-- central coordination node -->
+            <rect class="dg-box dg-core" x="325" y="177" width="210" height="66"/>
+            <text class="dg-n" x="430" y="200" text-anchor="middle">COORDINATION LAYER</text>
+            <text class="dg-t" x="430" y="222" text-anchor="middle">Mission AI</text>
+            <text class="dg-s" x="430" y="238" text-anchor="middle">shared world model</text>
+
+            <!-- units -->
+            <g>
+              <rect class="dg-box dg-unit" x="25" y="34" width="170" height="52"/>
+              <text class="dg-n" x="38" y="54" text-anchor="start">01</text>
+              <text class="dg-t" x="110" y="58" text-anchor="middle">Scientific Rover</text>
+              <text class="dg-s" x="110" y="74" text-anchor="middle">mobility · science</text>
+            </g>
+            <g>
+              <rect class="dg-box dg-unit" x="345" y="4" width="170" height="52"/>
+              <text class="dg-n" x="358" y="24" text-anchor="start">02</text>
+              <text class="dg-t" x="430" y="28" text-anchor="middle">Construction Robot</text>
+              <text class="dg-s" x="430" y="44" text-anchor="middle">mobility · manipulation</text>
+            </g>
+            <g>
+              <rect class="dg-box dg-unit" x="665" y="34" width="170" height="52"/>
+              <text class="dg-n" x="678" y="54" text-anchor="start">03</text>
+              <text class="dg-t" x="750" y="58" text-anchor="middle">Cargo Robot</text>
+              <text class="dg-s" x="750" y="74" text-anchor="middle">mobility · logistics</text>
+            </g>
+            <g>
+              <rect class="dg-box dg-unit" x="665" y="334" width="170" height="52"/>
+              <text class="dg-n" x="678" y="354" text-anchor="start">04</text>
+              <text class="dg-t" x="750" y="358" text-anchor="middle">Maintenance Robot</text>
+              <text class="dg-s" x="750" y="374" text-anchor="middle">mobility · servicing</text>
+            </g>
+            <g>
+              <rect class="dg-box dg-unit" x="345" y="364" width="170" height="52"/>
+              <text class="dg-n" x="358" y="384" text-anchor="start">05</text>
+              <text class="dg-t" x="430" y="388" text-anchor="middle">Laboratory Unit</text>
+              <text class="dg-s" x="430" y="404" text-anchor="middle">stationary · analysis</text>
+            </g>
+            <g>
+              <rect class="dg-box dg-unit" x="25" y="334" width="170" height="52"/>
+              <text class="dg-n" x="38" y="354" text-anchor="start">06</text>
+              <text class="dg-t" x="110" y="358" text-anchor="middle">Reconnaissance Drone</text>
+              <text class="dg-s" x="110" y="374" text-anchor="middle">aerial · survey</text>
+            </g>
+          </svg>
+        </div>
+        <figcaption id="fig4-cap">
+          Fig. 4 — Fleet coordination topology. Links are intermittent by
+          assumption, not continuous; the allocation layer is required to converge
+          without a persistent connection between every pair of units.
+        </figcaption>
+      </figure>
     </section>
 
     <!-- ------------------------ RESEARCH CONTEXT ------------------------ -->
@@ -720,9 +927,57 @@
       </div>
     </section>
 
+    <!-- ---------------------------- GALLERY ---------------------------- -->
+    <section class="section" id="gallery" aria-labelledby="gal-title">
+      <p class="section__id">§ 11</p>
+      <h2 id="gal-title">Diagram set</h2>
+      <p class="section__intro">
+        The project's standalone diagram files, kept here for citation and reuse under
+        CC BY 4.0. Figures 2–4 above are generated inline from the current v3.6
+        specification; the plates below are the published SVG originals.
+      </p>
+
+      <div class="plates">
+        <figure class="plate">
+          <a href="diagram-signal-path.svg">
+            <img src="diagram-signal-path.svg" loading="lazy" decoding="async"
+                 alt="Diagram of the signal path from Earth to Mars by way of an orbital relay, annotated with the one-way delay of 4 to 22 minutes.">
+          </a>
+          <figcaption><span class="plate__n">Plate A</span> Earth–Mars signal path</figcaption>
+        </figure>
+
+        <figure class="plate">
+          <a href="diagram-three-layers.svg">
+            <img src="diagram-three-layers.svg" loading="lazy" decoding="async"
+                 alt="Diagram of the three-layer control model: Earth command layer, relay and scheduling layer, and avatar autonomy layer.">
+          </a>
+          <figcaption>
+            <span class="plate__n">Plate B</span> Three-layer control model
+            <span class="plate__note">Earlier three-layer formulation, superseded by the six-stage chain in Fig. 2.</span>
+          </figcaption>
+        </figure>
+
+        <figure class="plate">
+          <a href="diagram-fleet.svg">
+            <img src="diagram-fleet.svg" loading="lazy" decoding="async"
+                 alt="Diagram of the robotic avatar fleet on the Martian surface, showing a survey unit, a relay unit and a manipulator unit.">
+          </a>
+          <figcaption>
+            <span class="plate__n">Plate C</span> Robotic avatar fleet
+            <span class="plate__note">Shows the earlier three-unit fleet; v3.6 specifies six units — see §06.</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="note">
+        Plates B and C predate White Paper v3.6 and are retained for continuity with
+        earlier citations. Both should be regenerated against the current architecture.
+      </p>
+    </section>
+
     <!-- ---------------------------- CONTACT ---------------------------- -->
     <section class="section" id="contact" aria-labelledby="contact-title">
-      <p class="section__id">§ 11</p>
+      <p class="section__id">§ 12</p>
       <h2 id="contact-title">Contact and collaboration</h2>
       <p class="section__intro">
         Technical discussion, peer review, criticism and independent replication are
@@ -731,12 +986,27 @@
         systems is particularly invited.
       </p>
 
+      <form class="cform" action="https://formspree.io/f/xeeyebdp" method="POST">
+        <div class="cform__row">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" type="text" name="name" autocomplete="name" required>
+        </div>
+        <div class="cform__row">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" type="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="cform__row">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="6" required></textarea>
+        </div>
+        <button class="btn btn--solid" type="submit">Send message</button>
+      </form>
+
       <ul class="links">
         <li><a href="mailto:kvadratinho@gmail.com"><span class="links__k">Email</span><span class="links__v">kvadratinho@gmail.com</span></a></li>
         <li><a href="https://github.com/Kvadratinho/mars-avatar-project"><span class="links__k">GitHub</span><span class="links__v">Kvadratinho/mars-avatar-project</span></a></li>
         <li><a href="https://doi.org/10.5281/zenodo.21185807"><span class="links__k">Zenodo</span><span class="links__v">10.5281/zenodo.21185807</span></a></li>
-        <!-- TODO: replace the placeholder below with the author's real ORCID iD -->
-        <li><a href="https://orcid.org/0000-0000-0000-0000"><span class="links__k">ORCID</span><span class="links__v">0000-0000-0000-0000</span></a></li>
+        <li><a href="https://orcid.org/0009-0008-9605-1625"><span class="links__k">ORCID</span><span class="links__v">0009-0008-9605-1625</span></a></li>
         <li><a href="https://mars-avatar.com/"><span class="links__k">Website</span><span class="links__v">mars-avatar.com</span></a></li>
         <li><a href="https://x.com/Mars_avatar"><span class="links__k">X</span><span class="links__v">@Mars_avatar</span></a></li>
       </ul>
@@ -756,7 +1026,7 @@
     <div class="colophon__brand">
       <p class="colophon__name">Mars Avatar Project</p>
       <p class="colophon__tag">Control Without Presence</p>
-      <p class="colophon__author">Oleksandr Khalanhot · Independent research</p>
+      <p class="colophon__author">Oleksandr Khalanhot · Independent researcher · Zürich, Switzerland</p>
     </div>
 
     <nav class="colophon__cols" aria-label="Footer">
@@ -773,8 +1043,7 @@
         <p class="colophon__h">Project</p>
         <ul>
           <li><a href="https://github.com/Kvadratinho/mars-avatar-project">GitHub repository</a></li>
-          <!-- TODO: replace the placeholder ORCID iD -->
-          <li><a href="https://orcid.org/0000-0000-0000-0000">ORCID 0000-0000-0000-0000</a></li>
+          <li><a href="https://orcid.org/0009-0008-9605-1625">ORCID 0009-0008-9605-1625</a></li>
           <li><a href="mailto:kvadratinho@gmail.com">kvadratinho@gmail.com</a></li>
           <li><a href="https://x.com/Mars_avatar">@Mars_avatar</a></li>
         </ul>
@@ -797,6 +1066,8 @@
     </p>
   </div>
 </footer>
+
+<a href="#top" id="to-top" aria-label="Back to top">↑</a>
 
 <script src="script.js" defer></script>
 </body>

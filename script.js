@@ -8,7 +8,8 @@
      02  Navigation drawer (small screens)
      03  Reading progress
      04  Document-index scroll spy
-     05  Copy to clipboard
+     05  Back to top
+     06  Copy to clipboard
    ========================================================================== */
 
 (function () {
@@ -141,10 +142,20 @@
   }
 
 
-  /* Single scroll listener drives both the progress rule and the index. */
+  /* ── 05 · BACK TO TOP ─────────────────────────────────────────────────── */
+
+  var toTop = $('#to-top');
+
+  function updateToTop() {
+    if (toTop) toTop.classList.toggle('show', window.scrollY > 600);
+  }
+
+
+  /* One scroll listener drives the progress rule, the index and the control. */
   var onScroll = onFrame(function () {
     updateProgress();
     updateSpy();
+    updateToTop();
   });
 
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -152,9 +163,11 @@
   window.addEventListener('load', onScroll);
   updateProgress();
   updateSpy();
+  updateToTop();
+  updateToTop();
 
 
-  /* ── 05 · COPY TO CLIPBOARD ───────────────────────────────────────────── */
+  /* ── 06 · COPY TO CLIPBOARD ───────────────────────────────────────────── */
 
   /* Falls back to a hidden textarea where the async Clipboard API is absent
      or blocked (for example on non-secure origins). */

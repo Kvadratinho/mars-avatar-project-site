@@ -913,6 +913,116 @@ main { padding-bottom: var(--s9); }
 }
 .cite .copy { margin: var(--s3) 0 0; display: block; width: max-content; }
 
+/* Diagram plates ----------------------------------------------------------- */
+.plates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s5);
+  margin-top: var(--s6);
+}
+
+.plate { margin: 0; }
+
+.plate a {
+  display: block;
+  padding: var(--s4);
+  border: 1px solid var(--rule);
+  background: var(--paper-3);
+  transition: border-color 120ms ease;
+}
+.plate a:hover { border-color: var(--ink-2); }
+
+/* A fixed box reserves layout space before the SVG loads, and `contain`
+   keeps any aspect ratio intact inside it. */
+.plate img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: var(--paper-3);
+}
+
+.plate figcaption {
+  margin-top: var(--s3);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.plate__n {
+  display: block;
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--mars);
+  margin-bottom: var(--s1);
+}
+.plate__note {
+  display: block;
+  margin-top: var(--s2);
+  padding-left: var(--s3);
+  border-left: 2px solid var(--rule);
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+}
+
+/* Contact form ------------------------------------------------------------- */
+.cform {
+  max-width: 34rem;
+  margin-top: var(--s6);
+  padding: var(--s5);
+  border: 1px solid var(--rule);
+  background: var(--paper-3);
+}
+.cform__row { margin-bottom: var(--s4); }
+.cform label {
+  display: block;
+  margin-bottom: var(--s2);
+  font-family: var(--mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.cform input,
+.cform textarea {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  border-radius: 0;
+}
+.cform textarea { resize: vertical; min-height: 8rem; }
+.cform input:focus-visible,
+.cform textarea:focus-visible { outline: var(--focus); outline-offset: 1px; }
+.cform button { margin-top: var(--s2); }
+
+/* Back to top -------------------------------------------------------------- */
+#to-top {
+  position: fixed;
+  right: var(--s5);
+  bottom: var(--s5);
+  z-index: 55;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--rule);
+  background: var(--paper-3);
+  color: var(--ink);
+  font-size: 1rem;
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms;
+}
+#to-top.show { opacity: 1; visibility: visible; transform: none; }
+#to-top:hover { border-color: var(--ink-2); background: var(--paper-2); }
+
 /* Contact links ------------------------------------------------------------ */
 .links {
   list-style: none;
@@ -1137,6 +1247,7 @@ main { padding-bottom: var(--s9); }
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+  #to-top { transform: none; }
   .transit__packet {
     animation: none;
     left: 50%;
@@ -1146,7 +1257,7 @@ main { padding-bottom: var(--s9); }
 }
 
 @media print {
-  .masthead, .rail, .progress, .skip-link, .copy, .navtoggle { display: none !important; }
+  .masthead, .rail, .progress, .skip-link, .copy, .navtoggle, #to-top { display: none !important; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .shell { display: block; max-width: none; padding: 0; }
   .section, .hero { border-color: #bbb; page-break-inside: avoid; }
@@ -1167,6 +1278,8 @@ main { padding-bottom: var(--s9); }
     overflow: visible;
   }
   .figure__frame svg { min-width: 0; }
+  .plate a { border-color: #bbb; background: #fff; page-break-inside: avoid; }
+  .cform { border-color: #bbb; }
   .section--night .figure figcaption { color: #333; }
   a::after { content: " (" attr(href) ")"; font-size: 8pt; word-break: break-all; }
   a[href^="#"]::after { content: ""; }
@@ -1175,6 +1288,7 @@ main { padding-bottom: var(--s9); }
 @media (forced-colors: active) {
   .btn, .unit, .phase, .paper, .ledger, .fn, .contrib li { border: 1px solid CanvasText; }
   .transit__packet { background: CanvasText; }
+  .cform input, .cform textarea, .plate a, #to-top { border: 1px solid CanvasText; }
   .figure__frame {
     --dg-stroke: CanvasText;
     --dg-fill: Canvas;
