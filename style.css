@@ -706,10 +706,12 @@ header#home h1 {
 
 .contact-form label {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-faint);
+  /* --text-faint даёт контраст ниже нормы WCAG; для подписи полей это
+     критично, поэтому здесь используется --text-dim */
+  color: var(--text-dim);
   margin-bottom: -6px;
 }
 
