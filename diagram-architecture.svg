@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-labelledby="t d">
+<title id="t">The six layers of the Mars Avatar Project architecture</title>
+<desc id="d">Six layers grouped into three segments. Earth segment: human layer, control interface, Mission Control Center. Space link: interplanetary communication with Mars relay satellites. Mars segment: local artificial intelligence and the robotic avatars. Feedback returns from the avatars to the human operator.</desc>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#9aa7b8"/></marker>
+<marker id="o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#ff6b35"/></marker>
+<style>
+.seg{fill:#080d18;stroke:#1b2739;stroke-width:2}
+.b{fill:#13294b;stroke:#3a6ea5;stroke-width:2}
+.m{fill:#5c2a18;stroke:#c1440e;stroke-width:2}
+.sl{font-family:"JetBrains Mono",monospace;font-size:15px;letter-spacing:.22em;fill:#5f6b7d}
+.n{font-family:"JetBrains Mono",monospace;font-size:14px;letter-spacing:.1em;fill:#ff6b35}
+.h{font-family:"Space Grotesk",Inter,system-ui,sans-serif;font-size:23px;font-weight:600;fill:#eef1f5}
+.p{font-family:Inter,system-ui,sans-serif;font-size:16px;fill:#9aa7b8}
+.f{fill:none;stroke:#9aa7b8;stroke-width:2}
+.r{fill:none;stroke:#ff6b35;stroke-width:2;stroke-dasharray:8 7}
+.rl{font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.14em;fill:#ff6b35}
+</style>
+</defs>
+
+<rect class="seg" x="40" y="30" width="890" height="300" rx="12"/>
+<text class="sl" x="66" y="62">E A R T H   S E G M E N T</text>
+<rect class="seg" x="40" y="350" width="890" height="200" rx="12"/>
+<text class="sl" x="66" y="382">S P A C E   L I N K</text>
+<rect class="seg" x="40" y="570" width="890" height="170" rx="12"/>
+<text class="sl" x="66" y="602">M A R S   S E G M E N T</text>
+
+<line class="f" x1="485" y1="158" x2="485" y2="186" marker-end="url(#a)"/>
+<line class="f" x1="485" y1="248" x2="485" y2="276" marker-end="url(#a)"/>
+<line class="f" x1="485" y1="330" x2="485" y2="396" marker-end="url(#a)"/>
+<line class="f" x1="485" y1="458" x2="485" y2="486" marker-end="url(#a)"/>
+<line class="f" x1="485" y1="550" x2="485" y2="616" marker-end="url(#a)"/>
+<line class="f" x1="485" y1="678" x2="485" y2="700" marker-end="url(#a)"/>
+
+<path class="r" d="M770 700 L985 700 L985 108 L790 108" marker-end="url(#o)"/>
+<text class="rl" x="1000" y="420" transform="rotate(-90 1000 420)" text-anchor="middle">FEEDBACK · RESULTS AND TELEMETRY</text>
+
+<rect class="b" x="180" y="82" width="610" height="76" rx="10"/>
+<text class="n" x="200" y="108">01</text>
+<text class="h" x="240" y="115">Human Layer</text>
+<text class="p" x="240" y="141">goals · priorities · critical approvals</text>
+
+<rect class="b" x="180" y="186" width="610" height="62" rx="10"/>
+<text class="n" x="200" y="212">02</text>
+<text class="h" x="240" y="215">Control Interface</text>
+<text class="p" x="240" y="238">VR / AR / voice · BCI only as a later supplement</text>
+
+<rect class="b" x="180" y="276" width="610" height="54" rx="10"/>
+<text class="n" x="200" y="300">03</text>
+<text class="h" x="240" y="298">Mission Control Center</text>
+<text class="p" x="240" y="320">planning · resources · fleet dispatch (Mission AI)</text>
+
+<rect class="b" x="180" y="396" width="610" height="62" rx="10"/>
+<text class="n" x="200" y="422">04</text>
+<text class="h" x="240" y="425">Interplanetary Communication</text>
+<text class="p" x="240" y="448">Deep Space Network · 4–22 min one way</text>
+
+<rect class="b" x="180" y="486" width="610" height="64" rx="10"/>
+<text class="h" x="240" y="516">Mars Relay Satellites</text>
+<text class="p" x="240" y="539">orbital relays · store-and-forward</text>
+
+<rect class="m" x="180" y="616" width="610" height="62" rx="10"/>
+<text class="n" x="200" y="642">05</text>
+<text class="h" x="240" y="645">Local Artificial Intelligence</text>
+<text class="p" x="240" y="668">decides <tspan font-style="italic">how</tspan> within the assigned goal</text>
+<rect class="m" x="180" y="700" width="610" height="40" rx="10"/>
+<text class="n" x="200" y="726">06</text>
+<text class="h" x="240" y="729">Robotic Avatars</text>
+<text class="p" x="470" y="729">rover · construction · cargo · drone · lab · maintenance</text>
+</svg>

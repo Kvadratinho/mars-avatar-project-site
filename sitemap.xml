@@ -7,42 +7,51 @@
     <lastmod>2026-07-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-
     <image:image>
       <image:loc>https://mars-avatar.com/diagram-signal-path.svg</image:loc>
       <image:title>Earth–Mars signal path</image:title>
       <image:caption>Signal path from Earth to Mars through an orbital relay, with a one-way delay of 4 to 22 minutes.</image:caption>
     </image:image>
-
     <image:image>
-      <image:loc>https://mars-avatar.com/diagram-three-layers.svg</image:loc>
-      <image:title>Three-layer control model</image:title>
-      <image:caption>Control model of the Mars Avatar Project: Earth command, relay and scheduling, avatar autonomy.</image:caption>
+      <image:loc>https://mars-avatar.com/diagram-architecture.svg</image:loc>
+      <image:title>Six-stage supervisory chain</image:title>
+      <image:caption>Supervisory control chain of the Mars Avatar Project: human operator, Mission AI, deep space communication, Mars relay network, robotic fleet, scientific operations.</image:caption>
     </image:image>
-
     <image:image>
       <image:loc>https://mars-avatar.com/diagram-fleet.svg</image:loc>
       <image:title>Robotic avatar fleet</image:title>
-      <image:caption>Robotic avatar fleet on the Martian surface: survey unit, relay unit, manipulator unit.</image:caption>
+      <image:caption>Six-unit robotic avatar fleet linked to a central Mission AI node holding the shared world model.</image:caption>
     </image:image>
-
+  
     <image:image>
-      <image:loc>https://mars-avatar.com/unit-survey.jpeg</image:loc>
-      <image:title>Survey Unit</image:title>
-      <image:caption>Concept render of the Survey Unit, a six-wheeled rover with a stereo camera mast.</image:caption>
+      <image:loc>https://mars-avatar.com/unit-construction.webp</image:loc>
+      <image:title>Construction Avatar</image:title>
+      <image:caption>Concept render of the construction avatar: tracked chassis, two manipulator arms, levelling blade and solar panels.</image:caption>
     </image:image>
-
     <image:image>
-      <image:loc>https://mars-avatar.com/unit-manipulator.jpeg</image:loc>
-      <image:title>Manipulator Unit</image:title>
-      <image:caption>Concept render of the Manipulator Unit, a rover with a multi-joint robotic arm.</image:caption>
+      <image:loc>https://mars-avatar.com/unit-drone.webp</image:loc>
+      <image:title>Drone</image:title>
+      <image:caption>Concept render of the reconnaissance drone hovering above the Martian surface.</image:caption>
     </image:image>
-
     <image:image>
-      <image:loc>https://mars-avatar.com/unit-relay.jpeg</image:loc>
-      <image:title>Relay Unit</image:title>
-      <image:caption>Concept render of the Relay Unit, a stationary antenna mast with a dish and solar panels.</image:caption>
+      <image:loc>https://mars-avatar.com/unit-laboratory.webp</image:loc>
+      <image:title>Laboratory Unit</image:title>
+      <image:caption>Concept render of the stationary laboratory unit with sample intake and deployed solar array.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mars-avatar.com/unit-maintenance.webp</image:loc>
+      <image:title>Maintenance Robot</image:title>
+      <image:caption>Concept render of the maintenance robot with articulated arm, dust brush and module rack.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mars-avatar.com/unit-rover.webp</image:loc>
+      <image:title>Scientific Rover</image:title>
+      <image:caption>Concept render of the scientific rover with camera mast, manipulator arm and MMRTG power unit.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mars-avatar.com/unit-cargo.webp</image:loc>
+      <image:title>Cargo Robot</image:title>
+      <image:caption>Concept render of the cargo robot: a six-wheeled flatbed hauler with a modular container and loading ramp.</image:caption>
     </image:image>
   </url>
-
 </urlset>

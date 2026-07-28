@@ -1,70 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="'Space Grotesk','Trebuchet MS',Arial,sans-serif">
-  <rect width="800" height="450" rx="12" fill="#120d0c"/>
-  <rect x="0.5" y="0.5" width="799" height="449" rx="12" fill="none" stroke="#33221d"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-labelledby="t d">
+<title id="t">Classes of robotic avatar in the Mars Avatar Project, version 3.6</title>
+<desc id="d">Six classes of specialised platform — scientific rover, construction avatar, cargo robot, drone, laboratory unit and maintenance robot — coordinated by Mission Control acting as the fleet dispatcher. Links are drawn dashed because connectivity between platforms is intermittent.</desc>
+<defs>
+<style>
+.b{fill:#0e1526;stroke:#2a3546;stroke-width:2}
+.k{fill:#13294b;stroke:#3a6ea5;stroke-width:2.5}
+.n{font-family:"JetBrains Mono",monospace;font-size:14px;letter-spacing:.12em;fill:#ff6b35}
+.c{font-family:"JetBrains Mono",monospace;font-size:14px;letter-spacing:.12em;fill:#9aa7b8}
+.h{font-family:"Space Grotesk",Inter,system-ui,sans-serif;font-size:22px;font-weight:600;fill:#eef1f5}
+.p{font-family:Inter,system-ui,sans-serif;font-size:15px;fill:#9aa7b8}
+.l{font-family:"JetBrains Mono",monospace;font-size:14px;letter-spacing:.12em;fill:#5f6b7d}
+.e{stroke:#2a3546;stroke-width:2;stroke-dasharray:6 6}
+</style>
+</defs>
 
-  <!-- stars -->
-  <g fill="#e8ddd6" opacity="0.4">
-    <circle cx="90" cy="70" r="1.2"/><circle cx="240" cy="50" r="1"/><circle cx="360" cy="90" r="1.3"/>
-    <circle cx="520" cy="45" r="1"/><circle cx="150" cy="140" r="1"/><circle cx="620" cy="140" r="1.1"/>
-    <circle cx="300" cy="170" r="1"/><circle cx="740" cy="200" r="1"/>
-  </g>
+<line class="e" x1="600" y1="337" x2="200" y2="106"/>
+<line class="e" x1="600" y1="337" x2="600" y2="76"/>
+<line class="e" x1="600" y1="337" x2="1000" y2="106"/>
+<line class="e" x1="600" y1="337" x2="1000" y2="561"/>
+<line class="e" x1="600" y1="337" x2="600" y2="591"/>
+<line class="e" x1="600" y1="337" x2="200" y2="561"/>
 
-  <!-- ground -->
-  <path d="M0,345 Q400,305 800,345 L800,450 L0,450 Z" fill="#241511"/>
-  <path d="M0,395 Q400,368 800,395 L800,450 L0,450 Z" fill="#2a180f"/>
-  <!-- rocks -->
-  <ellipse cx="95" cy="352" rx="14" ry="7" fill="#3a241c"/>
-  <ellipse cx="510" cy="342" rx="11" ry="6" fill="#3a241c"/>
-  <ellipse cx="732" cy="356" rx="16" ry="8" fill="#3a241c"/>
+<rect class="k" x="440" y="295" width="320" height="85" rx="10"/>
+<text class="c" x="462" y="326">MISSION CONTROL · LAYER 03</text>
+<text class="h" x="462" y="356">Mission AI</text>
+<text class="p" x="608" y="356">fleet dispatch</text>
 
-  <!-- comm links -->
-  <line x1="400" y1="238" x2="668" y2="88" stroke="#5bc4d4" stroke-width="2" stroke-dasharray="5 8" opacity="0.85"/>
-  <line x1="392" y1="252" x2="206" y2="286" stroke="#5bc4d4" stroke-width="1.6" stroke-dasharray="4 7" opacity="0.7"/>
-  <line x1="408" y1="252" x2="612" y2="288" stroke="#5bc4d4" stroke-width="1.6" stroke-dasharray="4 7" opacity="0.7"/>
+<rect class="b" x="60" y="60" width="280" height="92" rx="10"/>
+<text class="n" x="80" y="88">01</text>
+<text class="h" x="80" y="116">Scientific Rover</text>
+<text class="p" x="80" y="138">drilling · sampling · spectra</text>
 
-  <!-- orbital relay -->
-  <g>
-    <rect x="642" y="80" width="20" height="9" rx="2" fill="#3a6ea5"/>
-    <rect x="670" y="80" width="20" height="9" rx="2" fill="#3a6ea5"/>
-    <line x1="662" y1="84.5" x2="670" y2="84.5" stroke="#9b8a82" stroke-width="3"/>
-    <rect x="659" y="76" width="14" height="17" rx="3" fill="#b9aca4"/>
-    <circle cx="666" cy="70" r="3.5" fill="#ff6b35"/>
-  </g>
-  <text x="672" y="52" text-anchor="middle" font-family="'JetBrains Mono','Courier New',monospace" font-size="12" letter-spacing="2" fill="#9b8a82">ORBITAL RELAY</text>
+<rect class="b" x="460" y="30" width="280" height="92" rx="10"/>
+<text class="n" x="480" y="58">02</text>
+<text class="h" x="480" y="86">Construction Avatar</text>
+<text class="p" x="480" y="108">panels · structures · sites</text>
 
-  <!-- relay unit (center mast) -->
-  <rect x="396" y="255" width="8" height="80" rx="2" fill="#9b8a82"/>
-  <line x1="400" y1="335" x2="382" y2="352" stroke="#9b8a82" stroke-width="4" stroke-linecap="round"/>
-  <line x1="400" y1="335" x2="418" y2="352" stroke="#9b8a82" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="400" cy="248" r="7" fill="#ff6b35"/>
-  <path d="M384,242 A22,22 0 0 1 416,242" fill="none" stroke="#5bc4d4" stroke-width="2.5"/>
-  <path d="M377,233 A32,32 0 0 1 423,233" fill="none" stroke="#5bc4d4" stroke-width="2" opacity="0.6"/>
-  <text x="400" y="378" text-anchor="middle" font-family="'JetBrains Mono','Courier New',monospace" font-size="13" letter-spacing="2" fill="#e8ddd6">RELAY UNIT</text>
+<rect class="b" x="860" y="60" width="280" height="92" rx="10"/>
+<text class="n" x="880" y="88">03</text>
+<text class="h" x="880" y="116">Cargo Robot</text>
+<text class="p" x="880" y="138">equipment · parts · samples</text>
 
-  <!-- survey unit (left rover) -->
-  <rect x="140" y="298" width="72" height="22" rx="6" fill="#b9aca4"/>
-  <rect x="140" y="298" width="72" height="6" rx="3" fill="#c65a33"/>
-  <line x1="198" y1="298" x2="198" y2="276" stroke="#9b8a82" stroke-width="4"/>
-  <rect x="190" y="268" width="16" height="9" rx="2" fill="#e8ddd6"/>
-  <circle cx="152" cy="326" r="9" fill="#3a2a22" stroke="#9b8a82" stroke-width="2"/>
-  <circle cx="176" cy="326" r="9" fill="#3a2a22" stroke="#9b8a82" stroke-width="2"/>
-  <circle cx="200" cy="326" r="9" fill="#3a2a22" stroke="#9b8a82" stroke-width="2"/>
-  <text x="176" y="378" text-anchor="middle" font-family="'JetBrains Mono','Courier New',monospace" font-size="13" letter-spacing="2" fill="#e8ddd6">SURVEY UNIT</text>
+<rect class="b" x="860" y="515" width="280" height="92" rx="10"/>
+<text class="n" x="880" y="543">04</text>
+<text class="h" x="880" y="571">Drone</text>
+<text class="p" x="880" y="593">survey · mapping · inspection</text>
 
-  <!-- manipulator unit (right rover with arm) -->
-  <rect x="586" y="300" width="66" height="22" rx="6" fill="#b9aca4"/>
-  <rect x="586" y="300" width="66" height="6" rx="3" fill="#c65a33"/>
-  <circle cx="598" cy="328" r="9" fill="#3a2a22" stroke="#9b8a82" stroke-width="2"/>
-  <circle cx="620" cy="328" r="9" fill="#3a2a22" stroke="#9b8a82" stroke-width="2"/>
-  <circle cx="642" cy="328" r="9" fill="#3a2a22" stroke="#9b8a82" stroke-width="2"/>
-  <line x1="640" y1="300" x2="664" y2="272" stroke="#9b8a82" stroke-width="5" stroke-linecap="round"/>
-  <line x1="664" y1="272" x2="692" y2="286" stroke="#9b8a82" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="640" cy="300" r="4.5" fill="#ff6b35"/>
-  <circle cx="664" cy="272" r="4.5" fill="#ff6b35"/>
-  <line x1="692" y1="286" x2="700" y2="280" stroke="#e8ddd6" stroke-width="3" stroke-linecap="round"/>
-  <line x1="692" y1="286" x2="701" y2="291" stroke="#e8ddd6" stroke-width="3" stroke-linecap="round"/>
-  <text x="622" y="378" text-anchor="middle" font-family="'JetBrains Mono','Courier New',monospace" font-size="13" letter-spacing="2" fill="#e8ddd6">MANIPULATOR UNIT</text>
+<rect class="b" x="460" y="545" width="280" height="92" rx="10"/>
+<text class="n" x="480" y="573">05</text>
+<text class="h" x="480" y="601">Laboratory Unit</text>
+<text class="p" x="480" y="623">analysis · preparation · storage</text>
 
-  <!-- caption line -->
-  <text x="400" y="424" text-anchor="middle" font-size="13" fill="#9b8a82">specialized avatars coordinating locally · one uplink to Earth</text>
+<rect class="b" x="60" y="515" width="280" height="92" rx="10"/>
+<text class="n" x="80" y="543">06</text>
+<text class="h" x="80" y="571">Maintenance Robot</text>
+<text class="p" x="80" y="593">diagnostics · module swap</text>
+
+<text class="l" x="60" y="665">DASHED LINKS — CONNECTIVITY BETWEEN PLATFORMS IS INTERMITTENT BY ASSUMPTION</text>
 </svg>
